@@ -17,6 +17,10 @@
         --bg-light: #f1f2f6;
     }
 
+    html, body {
+        height: 100%;
+    }
+
     body {
         margin: 0;
         font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', Arial, sans-serif;
@@ -31,10 +35,9 @@
     .screen {
         display: none;
         width: 100%;
-        min-height: 100vh;
-        min-height: 100dvh;
+        min-height: 100%;
         position: relative;
-        padding: 30px 0 60px 0;
+        padding: 20px 0 40px 0;
     }
 
     /* Màn hình Start và End cần canh giữa */
@@ -46,6 +49,9 @@
     }
 
     /* Màn hình Game dùng Block để chống cắt thẻ tràn trên mobile */
+    #game {
+        overflow-y: auto;
+    }
     #game.active {
         display: block; 
     }
@@ -642,7 +648,9 @@ function startGame() {
     document.getElementById("game").classList.add("active");
     
     // Tự động cuộn lên đầu màn hình khi đổi màn (Khắc phục lỗi bị khuất khung)
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+        window.scrollTo(0, 0);
+    }, 50);
 
     bgMusic.play().then(() => {
         isMusicPlaying = true;
