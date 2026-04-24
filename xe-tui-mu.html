@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>🎒 Xé Túi Mù - Câu Chuyện Quả Trứng</title>
-
-<style>
-    * {
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🎒 Xé Túi Mù - Câu Chuyện Quả Trứng</title>
+    <style>
+      * {
         box-sizing: border-box;
-    }
+      }
 
-    :root {
+      :root {
         --primary: #ff4757;
         --secondary: #1e90ff;
         --text-dark: #2f3542;
         --bg-light: #f1f2f6;
-    }
+      }
 
-    body {
+      body {
         margin: 0;
         font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', Arial, sans-serif;
         text-align: center;
@@ -26,24 +25,29 @@
         overflow: hidden;
         height: 100vh;
         width: 100vw;
-    }
+      }
 
-    .screen {
+      .screen {
         display: none;
         height: 100%;
         width: 100%;
         align-items: center;
         flex-direction: column;
         position: relative;
-        overflow-y: auto; /* Cho phép cuộn nếu màn hình quá thấp */
+        overflow-y: auto;
+        /* Cho phép cuộn nếu màn hình quá thấp */
         overflow-x: hidden;
         padding: 20px 0;
-    }
-    .active { display: flex; }
+      }
 
-    /* START SCREEN */
-    .start-content {
-        margin: auto; /* Canh giữa an toàn */
+      .active {
+        display: flex;
+      }
+
+      /* START SCREEN */
+      .start-content {
+        margin: auto;
+        /* Canh giữa an toàn */
         z-index: 2;
         background: rgba(255, 255, 255, 0.95);
         padding: 30px 60px;
@@ -54,9 +58,9 @@
         position: relative;
         max-width: 90%;
         width: 800px;
-    }
+      }
 
-    .btn-welcome {
+      .btn-welcome {
         position: absolute;
         top: -20px;
         right: -20px;
@@ -67,43 +71,46 @@
         padding: 10px 20px;
         font-size: 16px;
         cursor: pointer;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         transition: transform 0.2s;
-    }
-    .btn-welcome:hover { transform: scale(1.1); }
+      }
 
-    .school-name {
-        color: #1e90ff; 
-        font-size: 26px; 
-        margin-bottom: 5px; 
+      .btn-welcome:hover {
+        transform: scale(1.1);
+      }
+
+      .school-name {
+        color: #1e90ff;
+        font-size: 26px;
+        margin-bottom: 5px;
         text-transform: uppercase;
-    }
+      }
 
-    h1.title {
+      h1.title {
         color: #ff4757;
         font-size: 65px;
         margin: 0 0 10px 0;
         text-transform: uppercase;
         text-shadow: 3px 3px 0 #fff, 5px 5px 0 #ffaa00;
         line-height: 1.2;
-    }
+      }
 
-    h2.subtitle {
+      h2.subtitle {
         color: #2ed573;
         font-size: 35px;
         margin-top: 0;
         margin-bottom: 25px;
         text-transform: uppercase;
-    }
+      }
 
-    .teacher-name {
-        color: #2f3542; 
-        font-size: 24px; 
-        margin-top: -10px; 
+      .teacher-name {
+        color: #2f3542;
+        font-size: 24px;
+        margin-top: -10px;
         margin-bottom: 30px;
-    }
+      }
 
-    button {
+      button {
         padding: 18px 45px;
         border: 5px solid #fff;
         border-radius: 35px;
@@ -113,23 +120,38 @@
         font-weight: bold;
         cursor: pointer;
         margin-top: 10px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         transition: all 0.2s;
         font-family: inherit;
         white-space: nowrap;
-    }
-    button:hover { 
-        transform: scale(1.05) translateY(-5px); 
-        box-shadow: 0 15px 25px rgba(0,0,0,0.3);
-    }
-    button.btn-blue { background: #1e90ff; }
-    button.btn-green { background: #2ed573; }
-    button.btn-yellow { background: #ffa502; color: #fff; }
-    button.btn-purple { background: #9b59b6; }
+      }
 
-    /* GAME SCREEN */
-    .top-bar {
-        position: relative; /* Thay vì absolute để ko bị đè */
+      button:hover {
+        transform: scale(1.05) translateY(-5px);
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      button.btn-blue {
+        background: #1e90ff;
+      }
+
+      button.btn-green {
+        background: #2ed573;
+      }
+
+      button.btn-yellow {
+        background: #ffa502;
+        color: #fff;
+      }
+
+      button.btn-purple {
+        background: #9b59b6;
+      }
+
+      /* GAME SCREEN */
+      .top-bar {
+        position: relative;
+        /* Thay vì absolute để ko bị đè */
         margin-top: 10px;
         margin-bottom: 20px;
         width: 90%;
@@ -139,39 +161,41 @@
         align-items: center;
         z-index: 5;
         flex-shrink: 0;
-    }
+      }
 
-    .top-buttons {
+      .top-buttons {
         display: flex;
         gap: 15px;
         flex-wrap: wrap;
-    }
+      }
 
-    .score {
+      .score {
         font-size: 26px;
         font-weight: bold;
         color: #ff4757;
         background: #fff;
         padding: 10px 25px;
         border-radius: 20px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         border: 4px solid #ffa502;
         white-space: nowrap;
-    }
+      }
 
-    .grid {
+      .grid {
         display: grid;
         grid-template-columns: repeat(4, 180px);
         gap: 30px;
-        margin: auto; /* Đẩy ra giữa dọc nếu màn hình đủ dài */
-        padding: 20px 20px 50px 20px; /* Thêm khoảng trống dưới cùng để scroll không bị sát mép */
+        margin: auto;
+        /* Đẩy ra giữa dọc nếu màn hình đủ dài */
+        padding: 20px 20px 50px 20px;
+        /* Thêm khoảng trống dưới cùng để scroll không bị sát mép */
         z-index: 2;
         justify-content: center;
         width: 100%;
-    }
+      }
 
-    /* THIẾT KẾ QUẢ TRỨNG */
-    .egg-container {
+      /* THIẾT KẾ QUẢ TRỨNG */
+      .egg-container {
         position: relative;
         width: 180px;
         height: 230px;
@@ -181,9 +205,9 @@
         justify-content: center;
         align-items: center;
         margin: auto;
-    }
+      }
 
-    .egg {
+      .egg {
         width: 150px;
         height: 200px;
         border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
@@ -191,60 +215,116 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        box-shadow: inset -15px -15px 20px rgba(0,0,0,0.1), 0 15px 25px rgba(0,0,0,0.2);
+        box-shadow: inset -15px -15px 20px rgba(0, 0, 0, 0.1), 0 15px 25px rgba(0, 0, 0, 0.2);
         animation: float 3s infinite ease-in-out;
         position: absolute;
         transition: transform 0.3s;
-        border: 4px dashed rgba(255,255,255,0.4);
-    }
+        border: 4px dashed rgba(255, 255, 255, 0.4);
+      }
 
-    .egg-label {
-        background: rgba(255,255,255,0.9);
+      .egg-label {
+        background: rgba(255, 255, 255, 0.9);
         color: #ff4757;
         padding: 5px 15px;
         border-radius: 15px;
         font-size: 22px;
         font-weight: bold;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         z-index: 2;
-    }
+      }
 
-    .egg-container:hover .egg { animation: shake 0.4s infinite; }
-    
-    .egg.e1 { background: radial-gradient(circle at 30% 30%, #ff6b81, #ff4757); }
-    .egg.e2 { background: radial-gradient(circle at 30% 30%, #70a1ff, #1e90ff); }
-    .egg.e3 { background: radial-gradient(circle at 30% 30%, #7bed9f, #2ed573); }
-    .egg.e4 { background: radial-gradient(circle at 30% 30%, #eccc68, #ffa502); }
+      .egg-container:hover .egg {
+        animation: shake 0.4s infinite;
+      }
 
-    .egg.open {
+      .egg.e1 {
+        background: radial-gradient(circle at 30% 30%, #ff6b81, #ff4757);
+      }
+
+      .egg.e2 {
+        background: radial-gradient(circle at 30% 30%, #70a1ff, #1e90ff);
+      }
+
+      .egg.e3 {
+        background: radial-gradient(circle at 30% 30%, #7bed9f, #2ed573);
+      }
+
+      .egg.e4 {
+        background: radial-gradient(circle at 30% 30%, #eccc68, #ffa502);
+      }
+
+      .egg.open {
         animation: crackOpen 0.6s forwards;
-    }
+      }
 
-    @keyframes float {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-15px); }
-    }
-    @keyframes shake {
-        0%, 100% { transform: rotate(0deg); }
-        25% { transform: rotate(-5deg); }
-        75% { transform: rotate(5deg); }
-    }
-    @keyframes bounceIn {
-        0% { transform: scale(0.5); opacity: 0; }
-        60% { transform: scale(1.1); opacity: 1; }
-        100% { transform: scale(1); }
-    }
-    @keyframes crackOpen {
-        0% { transform: scale(1); filter: brightness(1); }
-        40% { transform: scale(1.2) rotate(15deg); filter: brightness(1.2); }
-        100% { transform: scale(0) rotate(-30deg) translateY(100px); opacity: 0; }
-    }
+      @keyframes float {
 
-    /* POPUP */
-    .popup {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+
+        50% {
+          transform: translateY(-15px);
+        }
+      }
+
+      @keyframes shake {
+
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+
+        25% {
+          transform: rotate(-5deg);
+        }
+
+        75% {
+          transform: rotate(5deg);
+        }
+      }
+
+      @keyframes bounceIn {
+        0% {
+          transform: scale(0.5);
+          opacity: 0;
+        }
+
+        60% {
+          transform: scale(1.1);
+          opacity: 1;
+        }
+
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes crackOpen {
+        0% {
+          transform: scale(1);
+          filter: brightness(1);
+        }
+
+        40% {
+          transform: scale(1.2) rotate(15deg);
+          filter: brightness(1.2);
+        }
+
+        100% {
+          transform: scale(0) rotate(-30deg) translateY(100px);
+          opacity: 0;
+        }
+      }
+
+      /* POPUP */
+      .popup {
         position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         background: rgba(0, 0, 0, 0.85);
         display: none;
         justify-content: center;
@@ -252,41 +332,42 @@
         z-index: 100;
         backdrop-filter: blur(5px);
         padding: 20px;
-    }
+      }
 
-    .box {
+      .box {
         background: #fff;
         padding: 40px;
         border-radius: 30px;
         width: 100%;
         max-width: 700px;
         text-align: center;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         border: 8px solid #ffa502;
         transform: scale(0.5);
         opacity: 0;
         transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         max-height: 90vh;
         overflow-y: auto;
-    }
-    .popup.show .box {
+      }
+
+      .popup.show .box {
         transform: scale(1);
         opacity: 1;
-    }
+      }
 
-    #popupIcon {
-        font-size: 80px; 
+      #popupIcon {
+        font-size: 80px;
         margin-bottom: 10px;
-    }
+      }
 
-    .question-text {
+      .question-text {
         color: #ff4757;
         font-size: 38px;
         margin: 20px 0 30px 0;
         line-height: 1.4;
-    }
+      }
 
-    .answer-text {
+      .answer-text {
         color: #1e90ff;
         font-size: 34px;
         margin: 30px 0;
@@ -294,456 +375,625 @@
         transform: translateY(20px);
         transition: all 0.4s;
         font-weight: bold;
-    }
-    .answer-text.show {
+      }
+
+      .answer-text.show {
         opacity: 1;
         transform: translateY(0);
-    }
+      }
 
-    /* END SCREEN */
-    #end {
+      /* END SCREEN */
+      #end {
         background: radial-gradient(circle, #7bed9f 0%, #2ed573 100%);
-    }
-    .end-content {
-        margin: auto; /* Canh giữa an toàn */
+      }
+
+      .end-content {
+        margin: auto;
+        /* Canh giữa an toàn */
         z-index: 2;
         background: rgba(255, 255, 255, 0.95);
         padding: 50px;
         border-radius: 40px;
         border: 8px solid #fff;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         animation: bounceIn 1s ease;
         max-width: 90%;
-    }
-    .end-title-1 { color:#ff4757; font-size: 55px; margin-bottom: 20px; line-height: 1.2;}
-    .end-title-2 { color:#ff4757; font-size: 55px; margin-top: 0; line-height: 1.2;}
-    .end-claps { font-size: 60px; margin: 30px 0; }
+      }
 
-    /* DECORATIONS */
-    .decor { position: absolute; z-index: 1; pointer-events: none; }
-    .d1 { font-size: 50px; top: 10%; left: 10%; animation: float 4s infinite alternate; }
-    .d2 { font-size: 50px; top: 20%; right: 15%; animation: float 3s infinite alternate-reverse; }
-    .d3 { font-size: 50px; bottom: 15%; left: 20%; animation: float 5s infinite alternate; }
-    .d4 { font-size: 50px; bottom: 10%; right: 10%; animation: float 4s infinite alternate-reverse; }
-    
-    .c1 { top:15%; left:10%; font-size:80px; opacity:0.8; animation: float 4s infinite alternate; }
-    .c2 { top:10%; right:15%; font-size:100px; opacity:0.8; animation: float 5s infinite alternate-reverse; }
-    .g1 { bottom:5%; left:5%; font-size:100px; }
-    .g2 { bottom:5%; right:5%; font-size:100px; }
+      .end-title-1 {
+        color: #ff4757;
+        font-size: 55px;
+        margin-bottom: 20px;
+        line-height: 1.2;
+      }
 
-    .b1 { font-size: 80px; top: 10%; left: 10%; animation: float 4s infinite alternate; }
-    .b2 { font-size: 80px; top: 15%; right: 15%; animation: float 3s infinite alternate-reverse; }
+      .end-title-2 {
+        color: #ff4757;
+        font-size: 55px;
+        margin-top: 0;
+        line-height: 1.2;
+      }
 
-    /* ------------------------------------------
+      .end-claps {
+        font-size: 60px;
+        margin: 30px 0;
+      }
+
+      /* DECORATIONS */
+      .decor {
+        position: absolute;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .d1 {
+        font-size: 50px;
+        top: 10%;
+        left: 10%;
+        animation: float 4s infinite alternate;
+      }
+
+      .d2 {
+        font-size: 50px;
+        top: 20%;
+        right: 15%;
+        animation: float 3s infinite alternate-reverse;
+      }
+
+      .d3 {
+        font-size: 50px;
+        bottom: 15%;
+        left: 20%;
+        animation: float 5s infinite alternate;
+      }
+
+      .d4 {
+        font-size: 50px;
+        bottom: 10%;
+        right: 10%;
+        animation: float 4s infinite alternate-reverse;
+      }
+
+      .c1 {
+        top: 15%;
+        left: 10%;
+        font-size: 80px;
+        opacity: 0.8;
+        animation: float 4s infinite alternate;
+      }
+
+      .c2 {
+        top: 10%;
+        right: 15%;
+        font-size: 100px;
+        opacity: 0.8;
+        animation: float 5s infinite alternate-reverse;
+      }
+
+      .g1 {
+        bottom: 5%;
+        left: 5%;
+        font-size: 100px;
+      }
+
+      .g2 {
+        bottom: 5%;
+        right: 5%;
+        font-size: 100px;
+      }
+
+      .b1 {
+        font-size: 80px;
+        top: 10%;
+        left: 10%;
+        animation: float 4s infinite alternate;
+      }
+
+      .b2 {
+        font-size: 80px;
+        top: 15%;
+        right: 15%;
+        animation: float 3s infinite alternate-reverse;
+      }
+
+      /* ------------------------------------------
        RESPONSIVE MEDIA QUERIES
        ------------------------------------------ */
-
-    /* Máy tính bảng & Màn hình nhỏ (Tablet) */
-    @media (max-width: 900px) {
+      /* Máy tính bảng & Màn hình nhỏ (Tablet) */
+      @media (max-width: 900px) {
         .grid {
-            grid-template-columns: repeat(2, 180px);
-            gap: 25px;
+          grid-template-columns: repeat(2, 180px);
+          gap: 25px;
         }
+
         .top-bar {
-            flex-direction: column;
-            gap: 15px;
+          flex-direction: column;
+          gap: 15px;
         }
-        .top-buttons { justify-content: center; }
-        
-        h1.title { font-size: 50px; }
-        h2.subtitle { font-size: 28px; }
-        .question-text { font-size: 32px; }
-        .answer-text { font-size: 28px; }
-        .end-title-1, .end-title-2 { font-size: 45px; }
-    }
 
-    /* Điện thoại di động (Mobile) */
-    @media (max-width: 600px) {
+        .top-buttons {
+          justify-content: center;
+        }
+
+        h1.title {
+          font-size: 50px;
+        }
+
+        h2.subtitle {
+          font-size: 28px;
+        }
+
+        .question-text {
+          font-size: 32px;
+        }
+
+        .answer-text {
+          font-size: 28px;
+        }
+
+        .end-title-1,
+        .end-title-2 {
+          font-size: 45px;
+        }
+      }
+
+      /* Điện thoại di động (Mobile) */
+      @media (max-width: 600px) {
         .start-content {
-            padding: 30px 20px 20px 20px;
-            border-width: 5px;
+          padding: 30px 20px 20px 20px;
+          border-width: 5px;
         }
+
         .btn-welcome {
-            font-size: 13px;
-            padding: 8px 12px;
-            top: -15px;
-            right: 10px;
-            border-width: 2px;
+          font-size: 13px;
+          padding: 8px 12px;
+          top: -15px;
+          right: 10px;
+          border-width: 2px;
         }
 
-        .school-name { font-size: 18px; }
-        h1.title { font-size: 40px; text-shadow: 2px 2px 0 #fff, 3px 3px 0 #ffaa00; }
-        h2.subtitle { font-size: 20px; margin-bottom: 15px; }
-        .teacher-name { font-size: 16px; margin-bottom: 20px; }
+        .school-name {
+          font-size: 18px;
+        }
 
-        button { font-size: 18px; padding: 12px 25px; border-width: 3px; }
+        h1.title {
+          font-size: 40px;
+          text-shadow: 2px 2px 0 #fff, 3px 3px 0 #ffaa00;
+        }
 
-        .top-buttons button { font-size: 14px; padding: 8px 15px; }
-        .score { font-size: 16px; padding: 8px 15px; border-width: 3px;}
+        h2.subtitle {
+          font-size: 20px;
+          margin-bottom: 15px;
+        }
+
+        .teacher-name {
+          font-size: 16px;
+          margin-bottom: 20px;
+        }
+
+        button {
+          font-size: 18px;
+          padding: 12px 25px;
+          border-width: 3px;
+        }
+
+        .top-buttons button {
+          font-size: 14px;
+          padding: 8px 15px;
+        }
+
+        .score {
+          font-size: 16px;
+          padding: 8px 15px;
+          border-width: 3px;
+        }
 
         .grid {
-            grid-template-columns: repeat(2, 130px);
-            gap: 15px;
+          grid-template-columns: repeat(2, 130px);
+          gap: 15px;
         }
-        .egg-container { width: 130px; height: 170px; }
-        .egg { width: 110px; height: 150px; }
-        .egg-label { font-size: 16px; padding: 3px 10px; }
 
-        .box { padding: 25px 15px; border-width: 5px; }
-        #popupIcon { font-size: 60px; margin-bottom: 5px; }
-        .question-text { font-size: 22px; margin: 10px 0 20px 0; }
-        .answer-text { font-size: 20px; margin: 15px 0; }
+        .egg-container {
+          width: 130px;
+          height: 170px;
+        }
 
-        .end-content { padding: 30px 20px; border-width: 5px; }
-        .end-title-1, .end-title-2 { font-size: 32px; margin-bottom: 10px; }
-        .end-claps { font-size: 45px; margin: 20px 0; }
+        .egg {
+          width: 110px;
+          height: 150px;
+        }
 
-        .decor { font-size: 35px !important; }
-        .c1, .c2, .g1, .g2 { font-size: 50px !important; }
-    }
+        .egg-label {
+          font-size: 16px;
+          padding: 3px 10px;
+        }
 
-    /* Điện thoại màn hình quá nhỏ (iPhone SE, Galaxy Fold lúc gập) */
-    @media (max-width: 360px) {
+        .box {
+          padding: 25px 15px;
+          border-width: 5px;
+        }
+
+        #popupIcon {
+          font-size: 60px;
+          margin-bottom: 5px;
+        }
+
+        .question-text {
+          font-size: 22px;
+          margin: 10px 0 20px 0;
+        }
+
+        .answer-text {
+          font-size: 20px;
+          margin: 15px 0;
+        }
+
+        .end-content {
+          padding: 30px 20px;
+          border-width: 5px;
+        }
+
+        .end-title-1,
+        .end-title-2 {
+          font-size: 32px;
+          margin-bottom: 10px;
+        }
+
+        .end-claps {
+          font-size: 45px;
+          margin: 20px 0;
+        }
+
+        .decor {
+          font-size: 35px !important;
+        }
+
+        .c1,
+        .c2,
+        .g1,
+        .g2 {
+          font-size: 50px !important;
+        }
+      }
+
+      /* Điện thoại màn hình quá nhỏ (iPhone SE, Galaxy Fold lúc gập) */
+      @media (max-width: 360px) {
         .grid {
-            grid-template-columns: repeat(2, 110px);
-            gap: 10px;
+          grid-template-columns: repeat(2, 110px);
+          gap: 10px;
         }
-        .egg-container { width: 110px; height: 140px; }
-        .egg { width: 90px; height: 120px; }
-        h1.title { font-size: 32px; }
-        .school-name { font-size: 16px; }
-    }
 
-    /* Tùy chỉnh khi xoay ngang điện thoại (Landscape) */
-    @media (max-height: 500px) and (orientation: landscape) {
+        .egg-container {
+          width: 110px;
+          height: 140px;
+        }
+
+        .egg {
+          width: 90px;
+          height: 120px;
+        }
+
+        h1.title {
+          font-size: 32px;
+        }
+
+        .school-name {
+          font-size: 16px;
+        }
+      }
+
+      /* Tùy chỉnh khi xoay ngang điện thoại (Landscape) */
+      @media (max-height: 500px) and (orientation: landscape) {
         .grid {
-            grid-template-columns: repeat(4, 110px);
-            gap: 10px;
+          grid-template-columns: repeat(4, 110px);
+          gap: 10px;
         }
-        .egg-container { width: 110px; height: 140px; }
-        .egg { width: 90px; height: 120px; }
-        .top-bar { flex-direction: row; }
-        h1.title { font-size: 35px; margin: 0; }
-        h2.subtitle { font-size: 18px; margin-bottom: 10px; }
-        .start-content { padding: 15px 30px; }
-        .teacher-name { margin-bottom: 10px; }
-    }
 
-</style>
-</head>
+        .egg-container {
+          width: 110px;
+          height: 140px;
+        }
 
-<body>
+        .egg {
+          width: 90px;
+          height: 120px;
+        }
 
-<!-- START SCREEN -->
-<div id="start" class="screen active">
-    <!-- Hiệu ứng hoa giấy trang trí nền -->
-    <div class="decor d1">🎉</div>
-    <div class="decor d2">🎊</div>
-    <div class="decor d3">✨</div>
-    <div class="decor d4">🎁</div>
+        .top-bar {
+          flex-direction: row;
+        }
 
-    <div class="start-content">
+        h1.title {
+          font-size: 35px;
+          margin: 0;
+        }
+
+        h2.subtitle {
+          font-size: 18px;
+          margin-bottom: 10px;
+        }
+
+        .start-content {
+          padding: 15px 30px;
+        }
+
+        .teacher-name {
+          margin-bottom: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- START SCREEN -->
+    <div id="start" class="screen active">
+      <!-- Hiệu ứng hoa giấy trang trí nền -->
+      <div class="decor d1">🎉</div>
+      <div class="decor d2">🎊</div>
+      <div class="decor d3">✨</div>
+      <div class="decor d4">🎁</div>
+      <div class="start-content">
         <button class="btn-welcome" onclick="playWelcome()">🔊 Phát lời chào</button>
         <h3 class="school-name">Trường mầm non Mộ Đức</h3>
         <h1 class="title">XÉ TÚI MÙ</h1>
         <h2 class="subtitle">CÂU CHUYỆN QUẢ TRỨNG</h2>
         <h4 class="teacher-name">Giáo viên: Đinh Thị Ngọc Hân & Trần Thị Minh Hiếu</h4>
         <button onclick="startGame()">▶ BẮT ĐẦU CHƠI</button>
+      </div>
     </div>
-</div>
-
-<!-- GAME SCREEN -->
-<div id="game" class="screen">
-    <div class="top-bar">
+    <!-- GAME SCREEN -->
+    <div id="game" class="screen">
+      <div class="top-bar">
         <div class="top-buttons">
-            <button class="btn-blue" onclick="toggleFullscreen()">⛶ Toàn màn hình</button>
-            <button id="musicBtn" class="btn-purple" onclick="toggleMusic()">🔊 Tắt nhạc</button>
+          <button class="btn-blue" onclick="toggleFullscreen()">⛶ Toàn màn hình</button>
+          <button id="musicBtn" class="btn-purple" onclick="toggleMusic()">🔊 Tắt nhạc</button>
         </div>
-        <div class="score">⭐ Số trứng đã mở: <span id="score">0</span>/4</div>
-    </div>
-
-    <!-- Mây và trang trí -->
-    <div class="decor c1">☁️</div>
-    <div class="decor c2">☁️</div>
-    <div class="decor g1">🎁</div>
-    <div class="decor g2">🛍️</div>
-
-    <div class="grid">
+        <div class="score">⭐ Số trứng đã mở: <span id="score">0</span>/4 </div>
+      </div>
+      <!-- Mây và trang trí -->
+      <div class="decor c1">☁️</div>
+      <div class="decor c2">☁️</div>
+      <div class="decor g1">🎁</div>
+      <div class="decor g2">🛍️</div>
+      <div class="grid">
         <div class="egg-container" onclick="openEgg(this, 0)">
-            <div class="egg e1">
-                <div class="egg-label">Số 1</div>
-            </div>
+          <div class="egg e1">
+            <div class="egg-label">Số 1</div>
+          </div>
         </div>
         <div class="egg-container" onclick="openEgg(this, 1)">
-            <div class="egg e2">
-                <div class="egg-label">Số 2</div>
-            </div>
+          <div class="egg e2">
+            <div class="egg-label">Số 2</div>
+          </div>
         </div>
         <div class="egg-container" onclick="openEgg(this, 2)">
-            <div class="egg e3">
-                <div class="egg-label">Số 3</div>
-            </div>
+          <div class="egg e3">
+            <div class="egg-label">Số 3</div>
+          </div>
         </div>
         <div class="egg-container" onclick="openEgg(this, 3)">
-            <div class="egg e4">
-                <div class="egg-label">Số 4</div>
-            </div>
+          <div class="egg e4">
+            <div class="egg-label">Số 4</div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-
-<!-- POPUP SCREEN -->
-<div class="popup" id="popup">
-    <div class="box">
+    <!-- POPUP SCREEN -->
+    <div class="popup" id="popup">
+      <div class="box">
         <div id="popupIcon">❓</div>
         <h2 id="question" class="question-text"></h2>
         <button id="btnAnswer" class="btn-yellow" onclick="showAnswer()">Xem đáp án</button>
         <h3 id="answer" class="answer-text"></h3>
         <button id="btnClose" class="btn-green" style="display:none;" onclick="closePopup()">Tiếp tục ➔</button>
+      </div>
     </div>
-</div>
-
-<!-- END SCREEN -->
-<div id="end" class="screen">
-    <div class="decor b1">🎈</div>
-    <div class="decor b2">🎈</div>
-    
-    <div class="end-content">
+    <!-- END SCREEN -->
+    <div id="end" class="screen">
+      <div class="decor b1">🎈</div>
+      <div class="decor b2">🎈</div>
+      <div class="end-content">
         <h1 class="end-title-1">CÁC CON GIỎI QUÁ.</h1>
         <h1 class="end-title-2">CÔ KHEN LỚP MÌNH</h1>
         <div class="end-claps">👏👏👏</div>
         <button onclick="restart()">🔄 Chơi lại từ đầu</button>
+      </div>
     </div>
-</div>
-
-<!-- AUDIO EFFECTS -->
-<audio id="pop" src="audio/pop.mp3"></audio>
-<audio id="success" src="https://actions.google.com/sounds/v1/alarms/ding.ogg"></audio>
-<audio id="win" src="audio/win.mp3"></audio>
-
-<!-- NHẠC NỀN: Bài nhạc thiếu nhi vui nhộn -->
-<audio id="bgMusic" src="audio/nhac-nen.mp3" loop></audio>
-
-<script>
-/* BỘ CÂU HỎI & VĂN BẢN ĐỌC DỰ PHÒNG */
-const questions = [
-    { 
-        q: "Các con vừa được nghe câu chuyện gì?", 
-        a: "Câu chuyện: Quả Trứng 🥚", 
+    <!-- AUDIO EFFECTS -->
+    <audio id="pop" src="audio/pop.mp3"></audio>
+    <audio id="success" src="https://actions.google.com/sounds/v1/alarms/ding.ogg"></audio>
+    <audio id="win" src="audio/win.mp3"></audio>
+    <!-- NHẠC NỀN: Bài nhạc thiếu nhi vui nhộn -->
+    <audio id="bgMusic" src="audio/nhac-nen.mp3" loop></audio>
+    <script>
+      /* BỘ CÂU HỎI & VĂN BẢN ĐỌC DỰ PHÒNG */
+      const questions = [{
+        q: "Các con vừa được nghe câu chuyện gì?",
+        a: "Câu chuyện: Quả Trứng 🥚",
         icon: "📖",
         qAudio: "audio/cau-1.mp3",
         aAudio: "audio/dap-an-1.mp3",
         qFallback: "Các con vừa được nghe câu chuyện gì?",
         aFallback: "Đó là câu chuyện Quả Trứng."
-    },
-    { 
-        q: "Trong câu chuyện gồm những con vật nào?", 
-        a: "Gà trống 🐔, Lợn con 🐷, Chó đốm 🐶, Vịt con 🐥 và vịt mẹ 🦆", 
+      }, {
+        q: "Trong câu chuyện gồm những con vật nào?",
+        a: "Gà trống 🐔, Lợn con 🐷, Chó đốm 🐶, Vịt con 🐥 và vịt mẹ 🦆",
         icon: "🐔🐷🐶🐥🦆",
         qAudio: "audio/cau-2.mp3",
         aAudio: "audio/dap-an-2.mp3",
         qFallback: "Trong câu chuyện gồm những con vật nào?",
         aFallback: "Gồm có: Gà trống, Lợn con, Chó đốm và Vịt con."
-    },
-    { 
-        q: "Khi thấy quả trứng các con vật đã kêu như thế nào?", 
-        a: "Ò ó o - Ụt à ụt ịt - Gâu gâu 🎵", 
+      }, {
+        q: "Khi thấy quả trứng các con vật đã kêu như thế nào?",
+        a: "Ò ó o - Ụt à ụt ịt - Gâu gâu 🎵",
         icon: "🎵",
         qAudio: "audio/cau-3.mp3",
         aAudio: "audio/dap-an-3.mp3",
         qFallback: "Khi thấy quả trứng các con vật đã kêu như thế nào?",
         aFallback: "Gà kêu Ò ó o. Lợn kêu Út ít. Chó kêu Gâu gâu."
-    },
-    { 
-        q: "Quả trứng đã nở ra con vật gì nhỉ?", 
-        a: "Một chú Vịt con đáng yêu 🐥", 
+      }, {
+        q: "Quả trứng đã nở ra con vật gì nhỉ?",
+        a: "Một chú Vịt con đáng yêu 🐥",
         icon: "🐣",
         qAudio: "audio/cau-4.mp3",
         aAudio: "audio/dap-an-4.mp3",
         qFallback: "Quả trứng đã nở ra con gì nhỉ?",
         aFallback: "Đó là một chú Vịt con đáng yêu."
-    }
-];
+      }];
+      let score = 0;
+      let current = 0;
+      let currentVoiceObj = null;
+      // TỰ ĐỘNG PHÁT LỜI CHÀO KHI MỞ TRANG
+      window.onload = function() {
+        setTimeout(() => {
+          playWelcome();
+        }, 1000); // Chờ 1 giây để trang tải xong
+      };
 
-let score = 0;
-let current = 0;
-let currentVoiceObj = null;
-
-// TỰ ĐỘNG PHÁT LỜI CHÀO KHI MỞ TRANG
-window.onload = function() {
-    setTimeout(() => {
-        playWelcome();
-    }, 1000); // Chờ 1 giây để trang tải xong
-};
-
-function playWelcome() {
-    playVoice("audio/loi-chao.mp3", "Chào mừng các bé đến với Trường mầm non Mộ Đức. Chúng mình cùng chơi trò xé túi mù, câu chuyện Quả trứng nhé!");
-}
-
-/* 🎤 HỆ THỐNG ĐỌC GIỌNG GHI ÂM HOẶC GIỌNG MÁY (TỰ ĐỘNG CHỮA CHÁY NẾU THIẾU FILE) */
-function playVoice(audioPath, fallbackText) {
-    if (currentVoiceObj) {
-        currentVoiceObj.pause();
-        currentVoiceObj.currentTime = 0;
-    }
-    window.speechSynthesis.cancel(); // Dừng giọng máy nếu đang đọc
-    
-    if (audioPath) {
-        currentVoiceObj = new Audio(audioPath);
-        currentVoiceObj.play().catch(err => {
+      function playWelcome() {
+        playVoice("audio/loi-chao.mp3", "Chào mừng các bé đến với Trường mầm non Mộ Đức. Chúng mình cùng chơi trò xé túi mù, câu chuyện Quả trứng nhé!");
+      }
+      /* 🎤 HỆ THỐNG ĐỌC GIỌNG GHI ÂM HOẶC GIỌNG MÁY (TỰ ĐỘNG CHỮA CHÁY NẾU THIẾU FILE) */
+      function playVoice(audioPath, fallbackText) {
+        if (currentVoiceObj) {
+          currentVoiceObj.pause();
+          currentVoiceObj.currentTime = 0;
+        }
+        window.speechSynthesis.cancel(); // Dừng giọng máy nếu đang đọc
+        if (audioPath) {
+          currentVoiceObj = new Audio(audioPath);
+          currentVoiceObj.play().catch(err => {
             console.warn("Chưa tải file MP3: " + audioPath + ". Hệ thống sẽ dùng giọng tự động đọc thay thế.");
             // Bật giọng chị Google nếu chưa có file MP3
             if (fallbackText) speakMachine(fallbackText);
-        });
-    } else if (fallbackText) {
-        speakMachine(fallbackText);
-    }
-}
-
-// Hàm đọc bằng giọng máy của trình duyệt
-function speakMachine(text) {
-    const speech = new SpeechSynthesisUtterance(text);
-    speech.lang = "vi-VN";
-    speech.rate = 0.9;
-    window.speechSynthesis.speak(speech);
-}
-
-// ĐIỀU KHIỂN NHẠC NỀN
-const bgMusic = document.getElementById("bgMusic");
-bgMusic.volume = 0.25; 
-let isMusicPlaying = false;
-
-function toggleMusic() {
-    const musicBtn = document.getElementById("musicBtn");
-    if (isMusicPlaying) {
-        bgMusic.pause();
-        musicBtn.innerText = "🔇 Bật nhạc";
-        musicBtn.style.background = "#e74c3c";
-        isMusicPlaying = false;
-    } else {
-        bgMusic.play().catch(err => console.warn("Lỗi phát nhạc:", err));
-        musicBtn.innerText = "🔊 Tắt nhạc";
-        musicBtn.style.background = "#9b59b6";
-        isMusicPlaying = true;
-    }
-}
-
-/* 🎵 HỆ THỐNG PHÁT HIỆU ỨNG ÂM THANH */
-function playEffect(id) {
-    const audio = document.getElementById(id);
-    if (audio) {
-        audio.currentTime = 0;
-        audio.play().catch(err => console.warn("Lỗi phát hiệu ứng:", err));
-    }
-}
-
-function startGame() {
-    document.getElementById("start").classList.remove("active");
-    document.getElementById("game").classList.add("active");
-    
-    // Phát nhạc nền
-    bgMusic.play().then(() => {
-        isMusicPlaying = true;
-        document.getElementById("musicBtn").innerText = "🔊 Tắt nhạc";
-        document.getElementById("musicBtn").style.background = "#9b59b6";
-    }).catch(err => {
-        console.warn("Trình duyệt chặn autoplay, có thể tự bật bằng nút:", err);
-        isMusicPlaying = false;
-    });
-
-    // Dừng lời chào mở đầu nếu đang đọc
-    if (currentVoiceObj) currentVoiceObj.pause();
-    window.speechSynthesis.cancel();
-
-    // Thêm delay nhỏ rồi hỏi trẻ muốn chọn trứng nào
-    setTimeout(() => {
-        playVoice("audio/chon-trung.mp3", "Các con muốn chọn quả trứng màu gì đầu tiên nào?");
-    }, 500);
-}
-
-function openEgg(container, i) {
-    const egg = container.querySelector('.egg');
-    if(egg.classList.contains("open")) return;
-
-    current = i;
-    
-    // Hiệu ứng mở trứng
-    playEffect("pop");
-    egg.classList.add("open");
-
-    setTimeout(() => {
-        const popup = document.getElementById("popup");
-        popup.style.display = "flex";
-        
-        document.getElementById("popupIcon").innerText = questions[i].icon;
-        document.getElementById("question").innerText = questions[i].q;
-        
-        const ansElement = document.getElementById("answer");
-        ansElement.innerText = "";
-        ansElement.classList.remove("show");
-        
-        document.getElementById("btnAnswer").style.display = "inline-block";
-        document.getElementById("btnClose").style.display = "none";
-
-        setTimeout(() => { popup.classList.add("show"); }, 50);
-
-        // Phát giọng đọc câu hỏi
-        playVoice(questions[i].qAudio, questions[i].qFallback);
-
-    }, 700);
-}
-
-function showAnswer() {
-    const ansElement = document.getElementById("answer");
-    ansElement.innerText = questions[current].a;
-    ansElement.classList.add("show");
-    
-    document.getElementById("btnAnswer").style.display = "none";
-    document.getElementById("btnClose").style.display = "inline-block";
-
-    playEffect("success");
-    
-    score++;
-    document.getElementById("score").innerText = score;
-
-    // Phát giọng đọc đáp án
-    playVoice(questions[current].aAudio, questions[current].aFallback);
-}
-
-function closePopup() {
-    const popup = document.getElementById("popup");
-    popup.classList.remove("show");
-    
-    setTimeout(() => {
-        popup.style.display = "none";
-
-        if(score === 4) {
-            setTimeout(() => {
-                document.getElementById("game").classList.remove("active");
-                document.getElementById("end").classList.add("active");
-                playEffect("win");
-                
-                // Đọc lời kết thúc
-                playVoice("audio/ket-thuc.mp3", "Chúc mừng các bé! Các bé giỏi quá, cô khen lớp mình!");
-            }, 500);
+          });
+        } else if (fallbackText) {
+          speakMachine(fallbackText);
         }
-    }, 400);
-}
+      }
+      // Hàm đọc bằng giọng máy của trình duyệt
+      function speakMachine(text) {
+        const speech = new SpeechSynthesisUtterance(text);
+        speech.lang = "vi-VN";
+        speech.rate = 0.9;
+        window.speechSynthesis.speak(speech);
+      }
+      // ĐIỀU KHIỂN NHẠC NỀN
+      const bgMusic = document.getElementById("bgMusic");
+      bgMusic.volume = 0.25;
+      let isMusicPlaying = false;
 
-function restart() {
-    location.reload();
-}
+      function toggleMusic() {
+        const musicBtn = document.getElementById("musicBtn");
+        if (isMusicPlaying) {
+          bgMusic.pause();
+          musicBtn.innerText = "🔇 Bật nhạc";
+          musicBtn.style.background = "#e74c3c";
+          isMusicPlaying = false;
+        } else {
+          bgMusic.play().catch(err => console.warn("Lỗi phát nhạc:", err));
+          musicBtn.innerText = "🔊 Tắt nhạc";
+          musicBtn.style.background = "#9b59b6";
+          isMusicPlaying = true;
+        }
+      }
+      /* 🎵 HỆ THỐNG PHÁT HIỆU ỨNG ÂM THANH */
+      function playEffect(id) {
+        const audio = document.getElementById(id);
+        if (audio) {
+          audio.currentTime = 0;
+          audio.play().catch(err => console.warn("Lỗi phát hiệu ứng:", err));
+        }
+      }
 
-function toggleFullscreen() {
-    if(!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => {
-            console.log(`Lỗi toàn màn hình: ${err.message}`);
+      function startGame() {
+        document.getElementById("start").classList.remove("active");
+        document.getElementById("game").classList.add("active");
+        // Phát nhạc nền
+        bgMusic.play().then(() => {
+          isMusicPlaying = true;
+          document.getElementById("musicBtn").innerText = "🔊 Tắt nhạc";
+          document.getElementById("musicBtn").style.background = "#9b59b6";
+        }).catch(err => {
+          console.warn("Trình duyệt chặn autoplay, có thể tự bật bằng nút:", err);
+          isMusicPlaying = false;
         });
-    } else {
-        document.exitFullscreen();
-    }
-}
-</script>
+        // Dừng lời chào mở đầu nếu đang đọc
+        if (currentVoiceObj) currentVoiceObj.pause();
+        window.speechSynthesis.cancel();
+        // Thêm delay nhỏ rồi hỏi trẻ muốn chọn trứng nào
+        setTimeout(() => {
+          playVoice("audio/chon-trung.mp3", "Các con muốn chọn quả trứng màu gì đầu tiên nào?");
+        }, 500);
+      }
 
-</body>
+      function openEgg(container, i) {
+        const egg = container.querySelector('.egg');
+        if (egg.classList.contains("open")) return;
+        current = i;
+        // Hiệu ứng mở trứng
+        playEffect("pop");
+        egg.classList.add("open");
+        setTimeout(() => {
+          const popup = document.getElementById("popup");
+          popup.style.display = "flex";
+          document.getElementById("popupIcon").innerText = questions[i].icon;
+          document.getElementById("question").innerText = questions[i].q;
+          const ansElement = document.getElementById("answer");
+          ansElement.innerText = "";
+          ansElement.classList.remove("show");
+          document.getElementById("btnAnswer").style.display = "inline-block";
+          document.getElementById("btnClose").style.display = "none";
+          setTimeout(() => {
+            popup.classList.add("show");
+          }, 50);
+          // Phát giọng đọc câu hỏi
+          playVoice(questions[i].qAudio, questions[i].qFallback);
+        }, 700);
+      }
+
+      function showAnswer() {
+        const ansElement = document.getElementById("answer");
+        ansElement.innerText = questions[current].a;
+        ansElement.classList.add("show");
+        document.getElementById("btnAnswer").style.display = "none";
+        document.getElementById("btnClose").style.display = "inline-block";
+        playEffect("success");
+        score++;
+        document.getElementById("score").innerText = score;
+        // Phát giọng đọc đáp án
+        playVoice(questions[current].aAudio, questions[current].aFallback);
+      }
+
+      function closePopup() {
+        const popup = document.getElementById("popup");
+        popup.classList.remove("show");
+        setTimeout(() => {
+          popup.style.display = "none";
+          if (score === 4) {
+            setTimeout(() => {
+              document.getElementById("game").classList.remove("active");
+              document.getElementById("end").classList.add("active");
+              playEffect("win");
+              // Đọc lời kết thúc
+              playVoice("audio/ket-thuc.mp3", "Chúc mừng các bé! Các bé giỏi quá, cô khen lớp mình!");
+            }, 500);
+          }
+        }, 400);
+      }
+
+      function restart() {
+        location.reload();
+      }
+
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(err => {
+            console.log(`Lỗi toàn màn hình: ${err.message}`);
+          });
+        } else {
+          document.exitFullscreen();
+        }
+      }
+    </script>
+  </body>
 </html>
