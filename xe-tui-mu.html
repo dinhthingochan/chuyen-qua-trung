@@ -6,8 +6,10 @@
 <title>🎒 Xé Túi Mù - Câu Chuyện Quả Trứng</title>
 
 <style>
+    /* BƯỚC 1: RESET CƠ BẢN */
     * {
         box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent; /* Tắt nháy xanh khi bấm trên mobile */
     }
 
     :root {
@@ -17,30 +19,33 @@
         --bg-light: #f1f2f6;
     }
 
+    /* BƯỚC 2: BODY CUỘN TỰ NHIÊN (Không dùng overflow hidden/auto) */
     html, body {
-        height: 100%;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 100vh; /* Đảm bảo đủ màu nền nhưng vẫn cho phép dài ra */
     }
 
     body {
-        margin: 0;
         font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', Arial, sans-serif;
         text-align: center;
         background: radial-gradient(circle, #fffdf2 0%, #fbd571 100%);
         color: var(--text-dark);
-        min-height: 100vh;
-        min-height: 100dvh; 
-        overflow-x: hidden;
+        position: relative; /* Để chứa các trang trí fixed */
     }
 
+    /* BƯỚC 3: CẤU TRÚC MÀN HÌNH CHUẨN */
     .screen {
         display: none;
         width: 100%;
-        min-height: 100%;
+        min-height: 100vh;
         position: relative;
-        padding: 20px 0 40px 0;
+        z-index: 10; /* Nổi lên trên trang trí */
+        padding: 20px;
     }
 
-    /* Màn hình Start và End cần canh giữa */
+    /* Start & End cần ra giữa màn hình */
     #start.active, #end.active {
         display: flex;
         flex-direction: column;
@@ -48,17 +53,15 @@
         align-items: center;
     }
 
-    /* Màn hình Game dùng Block để chống cắt thẻ tràn trên mobile */
-    #game {
-        overflow-y: auto;
-    }
+    /* Game phải trải từ trên xuống dưới tự nhiên, CHỐNG CẮT HÌNH */
     #game.active {
         display: block; 
+        padding-top: 30px;
+        padding-bottom: 80px;
     }
 
     /* START SCREEN */
     .start-content {
-        z-index: 2;
         background: rgba(255, 255, 255, 0.95);
         padding: 30px 60px;
         border-radius: 40px;
@@ -66,9 +69,8 @@
         border: 8px solid #ff4757;
         animation: bounceIn 1s ease;
         position: relative;
-        max-width: 90%;
+        max-width: 100%;
         width: 800px;
-        margin: 0 auto;
     }
 
     .btn-welcome {
@@ -144,20 +146,21 @@
 
     /* GAME SCREEN */
     .top-bar {
-        position: relative;
-        margin: 10px auto 20px auto; /* Tự động canh giữa ngang */
-        width: 90%;
-        max-width: 1000px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        z-index: 5;
+        max-width: 900px;
+        margin: 0 auto 40px auto; /* Cách đều tự nhiên */
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 20px;
     }
 
     .top-buttons {
         display: flex;
         gap: 15px;
         flex-wrap: wrap;
+        justify-content: center;
     }
 
     .score {
@@ -170,35 +173,30 @@
         box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         border: 4px solid #ffa502;
         white-space: nowrap;
+        margin: 0 auto; /* Canh giữa trên mobile */
     }
 
     .grid {
         display: grid;
         grid-template-columns: repeat(4, 180px);
-        gap: 30px;
-        margin: 30px auto 50px auto; /* Tự động canh giữa ngang */
-        padding: 10px;
-        z-index: 2;
+        gap: 40px;
         justify-content: center;
-        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
     }
 
-    /* THIẾT KẾ QUẢ TRỨNG */
+    /* THIẾT KẾ QUẢ TRỨNG (Đã bỏ vị trí tuyệt đối) */
     .egg-container {
-        position: relative;
         width: 180px;
         height: 230px;
         cursor: pointer;
         perspective: 1000px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         margin: auto;
     }
 
     .egg {
-        width: 150px;
-        height: 200px;
+        width: 100%;
+        height: 100%;
         border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
         display: flex;
         flex-direction: column;
@@ -206,7 +204,6 @@
         align-items: center;
         box-shadow: inset -15px -15px 20px rgba(0,0,0,0.1), 0 15px 25px rgba(0,0,0,0.2);
         animation: float 3s infinite ease-in-out;
-        position: relative; /* Đã thay đổi từ absolute sang relative để hiển thị mượt trên mọi mobile */
         transition: transform 0.3s;
         border: 4px dashed rgba(255,255,255,0.4);
     }
@@ -219,7 +216,6 @@
         font-size: 22px;
         font-weight: bold;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        z-index: 2;
     }
 
     .egg-container:hover .egg { animation: shake 0.4s infinite; }
@@ -262,7 +258,7 @@
         display: none;
         justify-content: center;
         align-items: center;
-        z-index: 100;
+        z-index: 9999; /* Đảm bảo luôn nổi lên trên cùng */
         backdrop-filter: blur(5px);
         padding: 20px;
     }
@@ -318,50 +314,46 @@
         background: radial-gradient(circle, #7bed9f 0%, #2ed573 100%);
     }
     .end-content {
-        z-index: 2;
         background: rgba(255, 255, 255, 0.95);
         padding: 50px;
         border-radius: 40px;
         border: 8px solid #fff;
         box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         animation: bounceIn 1s ease;
-        max-width: 90%;
-        margin: 0 auto;
+        max-width: 100%;
+        width: 700px;
     }
     .end-title-1 { color:#ff4757; font-size: 55px; margin-bottom: 20px; line-height: 1.2;}
     .end-title-2 { color:#ff4757; font-size: 55px; margin-top: 0; line-height: 1.2;}
     .end-claps { font-size: 60px; margin: 30px 0; }
 
-    /* DECORATIONS */
-    .decor { position: absolute; z-index: 1; pointer-events: none; }
+    /* DECORATIONS: Đưa về FIXED để không xô lệch bố cục */
+    .decor { position: fixed; z-index: 1; pointer-events: none; opacity: 0.7; }
+    
+    .c1 { top:15%; left:5%; font-size:80px; animation: float 4s infinite alternate; }
+    .c2 { top:10%; right:5%; font-size:100px; animation: float 5s infinite alternate-reverse; }
+    .g1 { bottom:5%; left:5%; font-size:80px; }
+    .g2 { bottom:5%; right:5%; font-size:80px; }
+    
     .d1 { font-size: 50px; top: 10%; left: 10%; animation: float 4s infinite alternate; }
     .d2 { font-size: 50px; top: 20%; right: 15%; animation: float 3s infinite alternate-reverse; }
     .d3 { font-size: 50px; bottom: 15%; left: 20%; animation: float 5s infinite alternate; }
     .d4 { font-size: 50px; bottom: 10%; right: 10%; animation: float 4s infinite alternate-reverse; }
-    
-    .c1 { top:15%; left:10%; font-size:80px; opacity:0.8; animation: float 4s infinite alternate; }
-    .c2 { top:10%; right:15%; font-size:100px; opacity:0.8; animation: float 5s infinite alternate-reverse; }
-    .g1 { bottom:5%; left:5%; font-size:100px; }
-    .g2 { bottom:5%; right:5%; font-size:100px; }
-
-    .b1 { font-size: 80px; top: 10%; left: 10%; animation: float 4s infinite alternate; }
-    .b2 { font-size: 80px; top: 15%; right: 15%; animation: float 3s infinite alternate-reverse; }
 
     /* ------------------------------------------
-       RESPONSIVE MEDIA QUERIES
+       RESPONSIVE MEDIA QUERIES (Tối ưu hóa)
        ------------------------------------------ */
 
     /* Máy tính bảng & Màn hình nhỏ (Tablet) */
     @media (max-width: 900px) {
         .grid {
             grid-template-columns: repeat(2, 180px);
-            gap: 25px;
+            gap: 30px;
         }
         .top-bar {
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
-        .top-buttons { justify-content: center; }
         
         h1.title { font-size: 50px; }
         h2.subtitle { font-size: 28px; }
@@ -373,74 +365,74 @@
     /* Điện thoại di động (Mobile) */
     @media (max-width: 600px) {
         .start-content {
-            padding: 30px 20px 20px 20px;
+            padding: 30px 15px 20px 15px;
             border-width: 5px;
         }
         .btn-welcome {
             font-size: 13px;
             padding: 8px 12px;
             top: -15px;
-            right: 10px;
+            right: 15px;
             border-width: 2px;
         }
 
         .school-name { font-size: 18px; }
-        h1.title { font-size: 40px; text-shadow: 2px 2px 0 #fff, 3px 3px 0 #ffaa00; }
+        h1.title { font-size: 36px; text-shadow: 2px 2px 0 #fff, 3px 3px 0 #ffaa00; }
         h2.subtitle { font-size: 20px; margin-bottom: 15px; }
         .teacher-name { font-size: 16px; margin-bottom: 20px; }
 
         button { font-size: 18px; padding: 12px 25px; border-width: 3px; }
 
-        .top-buttons button { font-size: 14px; padding: 8px 15px; }
-        .score { font-size: 16px; padding: 8px 15px; border-width: 3px;}
+        .top-buttons button { font-size: 14px; padding: 8px 15px; margin-top: 5px; }
+        .score { font-size: 16px; padding: 8px 15px; border-width: 3px; width: 100%; text-align: center;}
 
+        /* Lưới tự động gập, chia 2 cột */
         .grid {
             grid-template-columns: repeat(2, 130px);
-            gap: 15px;
-            margin: 20px auto 40px auto; 
+            gap: 20px;
+            margin-top: 10px;
         }
-        .egg-container { width: 130px; height: 170px; }
-        .egg { width: 110px; height: 150px; }
+        .egg-container { width: 130px; height: 180px; }
         .egg-label { font-size: 16px; padding: 3px 10px; }
 
         .box { padding: 25px 15px; border-width: 5px; }
         #popupIcon { font-size: 60px; margin-bottom: 5px; }
-        .question-text { font-size: 22px; margin: 10px 0 20px 0; }
-        .answer-text { font-size: 20px; margin: 15px 0; }
+        .question-text { font-size: 20px; margin: 10px 0 20px 0; }
+        .answer-text { font-size: 18px; margin: 15px 0; }
 
         .end-content { padding: 30px 20px; border-width: 5px; }
-        .end-title-1, .end-title-2 { font-size: 32px; margin-bottom: 10px; }
+        .end-title-1, .end-title-2 { font-size: 28px; margin-bottom: 10px; }
         .end-claps { font-size: 45px; margin: 20px 0; }
 
-        .decor { font-size: 35px !important; }
-        .c1, .c2, .g1, .g2 { font-size: 50px !important; }
+        /* Trang trí nhỏ lại trên mobile */
+        .decor { font-size: 30px !important; }
+        .c1, .c2 { font-size: 50px !important; }
+        .g1, .g2 { font-size: 40px !important; }
     }
 
-    /* Điện thoại màn hình quá nhỏ */
+    /* Điện thoại màn hình quá nhỏ (iPhone SE) */
     @media (max-width: 360px) {
         .grid {
             grid-template-columns: repeat(2, 110px);
-            gap: 10px;
-            margin-top: 10px;
+            gap: 15px;
         }
-        .egg-container { width: 110px; height: 140px; }
-        .egg { width: 90px; height: 120px; }
-        h1.title { font-size: 32px; }
+        .egg-container { width: 110px; height: 150px; }
+        h1.title { font-size: 30px; }
         .school-name { font-size: 16px; }
     }
 
-    /* Tùy chỉnh khi xoay ngang điện thoại */
+    /* Xoay ngang (Landscape) */
     @media (max-height: 500px) and (orientation: landscape) {
         .grid {
-            grid-template-columns: repeat(4, 110px);
-            gap: 10px;
+            grid-template-columns: repeat(4, 120px);
+            gap: 15px;
         }
-        .egg-container { width: 110px; height: 140px; }
-        .egg { width: 90px; height: 120px; }
-        .top-bar { flex-direction: row; }
-        h1.title { font-size: 35px; margin: 0; }
-        h2.subtitle { font-size: 18px; margin-bottom: 10px; }
-        .start-content { padding: 15px 30px; }
+        .egg-container { width: 120px; height: 160px; }
+        .top-bar { flex-direction: row; margin-bottom: 15px; }
+        .score { width: auto; }
+        h1.title { font-size: 30px; margin: 0; }
+        h2.subtitle { font-size: 16px; margin-bottom: 10px; }
+        .start-content { padding: 15px; }
         .teacher-name { margin-bottom: 10px; }
     }
 
@@ -449,13 +441,14 @@
 
 <body>
 
+<!-- Các thành phần trang trí được đặt làm nền chung (FIXED) -->
+<div class="decor c1" id="decor1">☁️</div>
+<div class="decor c2" id="decor2">☁️</div>
+<div class="decor g1" id="decor3">🎁</div>
+<div class="decor g2" id="decor4">🛍️</div>
+
 <!-- START SCREEN -->
 <div id="start" class="screen active">
-    <div class="decor d1">🎉</div>
-    <div class="decor d2">🎊</div>
-    <div class="decor d3">✨</div>
-    <div class="decor d4">🎁</div>
-
     <div class="start-content">
         <button class="btn-welcome" onclick="playWelcome()">🔊 Phát lời chào</button>
         <h3 class="school-name">Trường mầm non Mộ Đức</h3>
@@ -475,11 +468,6 @@
         </div>
         <div class="score">⭐ Số trứng đã mở: <span id="score">0</span>/4</div>
     </div>
-
-    <div class="decor c1">☁️</div>
-    <div class="decor c2">☁️</div>
-    <div class="decor g1">🎁</div>
-    <div class="decor g2">🛍️</div>
 
     <div class="grid">
         <div class="egg-container" onclick="openEgg(this, 0)">
@@ -518,9 +506,6 @@
 
 <!-- END SCREEN -->
 <div id="end" class="screen">
-    <div class="decor b1">🎈</div>
-    <div class="decor b2">🎈</div>
-    
     <div class="end-content">
         <h1 class="end-title-1">CÁC CON GIỎI QUÁ.</h1>
         <h1 class="end-title-2">CÔ KHEN LỚP MÌNH</h1>
@@ -534,7 +519,7 @@
 <audio id="success" src="https://actions.google.com/sounds/v1/alarms/ding.ogg"></audio>
 <audio id="win" src="audio/win.mp3"></audio>
 
-<!-- NHẠC NỀN: Bài nhạc thiếu nhi vui nhộn -->
+<!-- NHẠC NỀN -->
 <audio id="bgMusic" src="audio/nhac-nen.mp3" loop></audio>
 
 <script>
@@ -643,11 +628,26 @@ function playEffect(id) {
     }
 }
 
+function changeDecorationsForGame() {
+    document.getElementById('decor1').innerText = "☁️";
+    document.getElementById('decor2').innerText = "☁️";
+    document.getElementById('decor3').innerText = "🎁";
+    document.getElementById('decor4').innerText = "🛍️";
+}
+
+function changeDecorationsForEnd() {
+    document.getElementById('decor1').innerText = "🎈";
+    document.getElementById('decor2').innerText = "🎈";
+    document.getElementById('decor3').innerText = "🎉";
+    document.getElementById('decor4').innerText = "✨";
+}
+
 function startGame() {
     document.getElementById("start").classList.remove("active");
     document.getElementById("game").classList.add("active");
+    changeDecorationsForGame();
     
-    // Tự động cuộn lên đầu màn hình khi đổi màn (Khắc phục lỗi bị khuất khung)
+    // Đẩy màn hình lên sát mép trên
     setTimeout(() => {
         window.scrollTo(0, 0);
     }, 50);
@@ -722,9 +722,11 @@ function closePopup() {
             setTimeout(() => {
                 document.getElementById("game").classList.remove("active");
                 document.getElementById("end").classList.add("active");
+                changeDecorationsForEnd();
                 
-                // Cuộn lên top ở màn hình kết thúc
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setTimeout(() => {
+                    window.scrollTo(0, 0);
+                }, 50);
                 
                 playEffect("win");
                 playVoice("audio/ket-thuc.mp3", "Chúc mừng các bé! Các bé giỏi quá, cô khen lớp mình!");
