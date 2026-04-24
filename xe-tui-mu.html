@@ -162,7 +162,7 @@
 
 <!-- ================= MÀN HÌNH TRÒ CHƠI ================= -->
 <div id="game" class="hidden min-h-[100dvh] w-full relative z-10 pt-6 pb-24 md:px-6">
-    <div class="max-w-5xl mx-auto px-2 md:px-0">
+    <div class="max-w-5xl mx-auto px-4 md:px-0">
         
         <!-- Thanh điều khiển trên cùng -->
         <div class="flex flex-col-reverse md:flex-row justify-between items-center gap-4 mb-8 md:mb-16">
@@ -181,8 +181,12 @@
         <p class="md:hidden text-[#ff4757] font-bold text-lg mb-4 animate-pulse">👈 Vuốt ngang để chọn trứng 👉</p>
     </div>
 
-    <!-- DANH SÁCH QUẢ TRỨNG (CUỘN NGANG TRÊN MOBILE) -->
-    <div class="flex overflow-x-auto hide-scrollbar gap-6 md:gap-10 pb-8 px-8 md:px-0 w-full justify-start md:justify-center snap-x snap-mandatory items-center max-w-5xl mx-auto" style="-webkit-overflow-scrolling: touch;">
+    <!-- DANH SÁCH QUẢ TRỨNG (ĐÃ FIX LỖI MẤT QUẢ SỐ 1) -->
+    <div class="flex overflow-x-auto hide-scrollbar gap-6 md:gap-10 pb-8 w-full justify-start lg:justify-center snap-x snap-mandatory items-center max-w-6xl mx-auto" style="-webkit-overflow-scrolling: touch;">
+        
+        <!-- Khoảng trống ảo ĐẦU giúp tạo lề bảo vệ trứng số 1 trên Mobile/Tablet -->
+        <div class="shrink-0 w-2 md:w-8 lg:hidden"></div>
+
         <!-- Quả 1 -->
         <div class="shrink-0 snap-center">
             <div class="egg-wrapper" onclick="openEgg(this, 0)">
@@ -207,8 +211,9 @@
                 <div class="egg e4"><div class="egg-label">Số 4</div></div>
             </div>
         </div>
-        <!-- Khoảng trống ảo cuối cùng cho Mobile mượt mà -->
-        <div class="shrink-0 w-4 md:hidden"></div>
+
+        <!-- Khoảng trống ảo CUỐI giúp mượt mà khi cuộn tới cuối -->
+        <div class="shrink-0 w-2 md:w-8 lg:hidden"></div>
     </div>
 </div>
 
