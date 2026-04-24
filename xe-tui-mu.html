@@ -17,7 +17,6 @@
         --bg-light: #f1f2f6;
     }
 
-    /* TRẢ LẠI CUỘN TỰ NHIÊN CHO ĐIỆN THOẠI, KHÔNG DÙNG OVERFLOW: HIDDEN NỮA */
     body {
         margin: 0;
         font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', Arial, sans-serif;
@@ -25,7 +24,7 @@
         background: radial-gradient(circle, #fffdf2 0%, #fbd571 100%);
         color: var(--text-dark);
         min-height: 100vh;
-        min-height: 100dvh; /* Tự động né thanh địa chỉ trên mobile (Safari/Chrome) */
+        min-height: 100dvh; 
         overflow-x: hidden;
     }
 
@@ -34,20 +33,21 @@
         width: 100%;
         min-height: 100vh;
         min-height: 100dvh;
-        align-items: center;
-        flex-direction: column;
         position: relative;
-        padding: 30px 0 60px 0; /* Khoảng không an toàn trên và dưới */
+        padding: 30px 0 60px 0;
     }
-    .active { display: flex; }
 
-    /* Căn giữa dọc an toàn cho Start và End */
-    #start, #end {
+    /* Màn hình Start và End cần canh giữa */
+    #start.active, #end.active {
+        display: flex;
+        flex-direction: column;
         justify-content: center;
+        align-items: center;
     }
-    /* Đẩy game lên đầu, không bị ép ra giữa gây mất nội dung */
-    #game {
-        justify-content: flex-start;
+
+    /* Màn hình Game dùng Block để chống cắt thẻ tràn trên mobile */
+    #game.active {
+        display: block; 
     }
 
     /* START SCREEN */
@@ -62,6 +62,7 @@
         position: relative;
         max-width: 90%;
         width: 800px;
+        margin: 0 auto;
     }
 
     .btn-welcome {
@@ -138,15 +139,13 @@
     /* GAME SCREEN */
     .top-bar {
         position: relative;
-        margin-top: 10px;
-        margin-bottom: 20px;
+        margin: 10px auto 20px auto; /* Tự động canh giữa ngang */
         width: 90%;
         max-width: 1000px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         z-index: 5;
-        flex-shrink: 0;
     }
 
     .top-buttons {
@@ -171,13 +170,11 @@
         display: grid;
         grid-template-columns: repeat(4, 180px);
         gap: 30px;
-        /* Loại bỏ auto ở dọc để tránh lỗi đẩy mất nội dung lên trên ở mobile */
-        margin: 30px 0 50px 0; 
+        margin: 30px auto 50px auto; /* Tự động canh giữa ngang */
         padding: 10px;
         z-index: 2;
         justify-content: center;
         width: 100%;
-        flex-shrink: 0;
     }
 
     /* THIẾT KẾ QUẢ TRỨNG */
@@ -323,6 +320,7 @@
         box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         animation: bounceIn 1s ease;
         max-width: 90%;
+        margin: 0 auto;
     }
     .end-title-1 { color:#ff4757; font-size: 55px; margin-bottom: 20px; line-height: 1.2;}
     .end-title-2 { color:#ff4757; font-size: 55px; margin-top: 0; line-height: 1.2;}
@@ -393,7 +391,7 @@
         .grid {
             grid-template-columns: repeat(2, 130px);
             gap: 15px;
-            margin: 20px 0 40px 0; /* Cách đều, không dùng margin auto */
+            margin: 20px auto 40px auto; 
         }
         .egg-container { width: 130px; height: 170px; }
         .egg { width: 110px; height: 150px; }
@@ -412,7 +410,7 @@
         .c1, .c2, .g1, .g2 { font-size: 50px !important; }
     }
 
-    /* Điện thoại màn hình quá nhỏ (iPhone SE, Galaxy Fold lúc gập) */
+    /* Điện thoại màn hình quá nhỏ */
     @media (max-width: 360px) {
         .grid {
             grid-template-columns: repeat(2, 110px);
@@ -425,7 +423,7 @@
         .school-name { font-size: 16px; }
     }
 
-    /* Tùy chỉnh khi xoay ngang điện thoại (Landscape) */
+    /* Tùy chỉnh khi xoay ngang điện thoại */
     @media (max-height: 500px) and (orientation: landscape) {
         .grid {
             grid-template-columns: repeat(4, 110px);
@@ -447,7 +445,6 @@
 
 <!-- START SCREEN -->
 <div id="start" class="screen active">
-    <!-- Hiệu ứng hoa giấy trang trí nền -->
     <div class="decor d1">🎉</div>
     <div class="decor d2">🎊</div>
     <div class="decor d3">✨</div>
@@ -473,7 +470,6 @@
         <div class="score">⭐ Số trứng đã mở: <span id="score">0</span>/4</div>
     </div>
 
-    <!-- Mây và trang trí -->
     <div class="decor c1">☁️</div>
     <div class="decor c2">☁️</div>
     <div class="decor g1">🎁</div>
@@ -536,7 +532,6 @@
 <audio id="bgMusic" src="audio/nhac-nen.mp3" loop></audio>
 
 <script>
-/* BỘ CÂU HỎI & VĂN BẢN ĐỌC DỰ PHÒNG */
 const questions = [
     { 
         q: "Các con vừa được nghe câu chuyện gì?", 
@@ -580,30 +575,27 @@ let score = 0;
 let current = 0;
 let currentVoiceObj = null;
 
-// TỰ ĐỘNG PHÁT LỜI CHÀO KHI MỞ TRANG
 window.onload = function() {
     setTimeout(() => {
         playWelcome();
-    }, 1000); // Chờ 1 giây để trang tải xong
+    }, 1000); 
 };
 
 function playWelcome() {
     playVoice("audio/loi-chao.mp3", "Chào mừng các bé đến với Trường mầm non Mộ Đức. Chúng mình cùng chơi trò xé túi mù, câu chuyện Quả trứng nhé!");
 }
 
-/* 🎤 HỆ THỐNG ĐỌC GIỌNG GHI ÂM HOẶC GIỌNG MÁY (TỰ ĐỘNG CHỮA CHÁY NẾU THIẾU FILE) */
 function playVoice(audioPath, fallbackText) {
     if (currentVoiceObj) {
         currentVoiceObj.pause();
         currentVoiceObj.currentTime = 0;
     }
-    window.speechSynthesis.cancel(); // Dừng giọng máy nếu đang đọc
+    window.speechSynthesis.cancel(); 
     
     if (audioPath) {
         currentVoiceObj = new Audio(audioPath);
         currentVoiceObj.play().catch(err => {
-            console.warn("Chưa tải file MP3: " + audioPath + ". Hệ thống sẽ dùng giọng tự động đọc thay thế.");
-            // Bật giọng chị Google nếu chưa có file MP3
+            console.warn("Chưa tải file MP3: " + audioPath);
             if (fallbackText) speakMachine(fallbackText);
         });
     } else if (fallbackText) {
@@ -611,7 +603,6 @@ function playVoice(audioPath, fallbackText) {
     }
 }
 
-// Hàm đọc bằng giọng máy của trình duyệt
 function speakMachine(text) {
     const speech = new SpeechSynthesisUtterance(text);
     speech.lang = "vi-VN";
@@ -619,7 +610,6 @@ function speakMachine(text) {
     window.speechSynthesis.speak(speech);
 }
 
-// ĐIỀU KHIỂN NHẠC NỀN
 const bgMusic = document.getElementById("bgMusic");
 bgMusic.volume = 0.25; 
 let isMusicPlaying = false;
@@ -639,7 +629,6 @@ function toggleMusic() {
     }
 }
 
-/* 🎵 HỆ THỐNG PHÁT HIỆU ỨNG ÂM THANH */
 function playEffect(id) {
     const audio = document.getElementById(id);
     if (audio) {
@@ -652,21 +641,21 @@ function startGame() {
     document.getElementById("start").classList.remove("active");
     document.getElementById("game").classList.add("active");
     
-    // Phát nhạc nền
+    // Tự động cuộn lên đầu màn hình khi đổi màn (Khắc phục lỗi bị khuất khung)
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     bgMusic.play().then(() => {
         isMusicPlaying = true;
         document.getElementById("musicBtn").innerText = "🔊 Tắt nhạc";
         document.getElementById("musicBtn").style.background = "#9b59b6";
     }).catch(err => {
-        console.warn("Trình duyệt chặn autoplay, có thể tự bật bằng nút:", err);
+        console.warn("Trình duyệt chặn autoplay", err);
         isMusicPlaying = false;
     });
 
-    // Dừng lời chào mở đầu nếu đang đọc
     if (currentVoiceObj) currentVoiceObj.pause();
     window.speechSynthesis.cancel();
 
-    // Thêm delay nhỏ rồi hỏi trẻ muốn chọn trứng nào
     setTimeout(() => {
         playVoice("audio/chon-trung.mp3", "Các con muốn chọn quả trứng màu gì đầu tiên nào?");
     }, 500);
@@ -677,8 +666,6 @@ function openEgg(container, i) {
     if(egg.classList.contains("open")) return;
 
     current = i;
-    
-    // Hiệu ứng mở trứng
     playEffect("pop");
     egg.classList.add("open");
 
@@ -697,8 +684,6 @@ function openEgg(container, i) {
         document.getElementById("btnClose").style.display = "none";
 
         setTimeout(() => { popup.classList.add("show"); }, 50);
-
-        // Phát giọng đọc câu hỏi
         playVoice(questions[i].qAudio, questions[i].qFallback);
 
     }, 700);
@@ -713,11 +698,8 @@ function showAnswer() {
     document.getElementById("btnClose").style.display = "inline-block";
 
     playEffect("success");
-    
     score++;
     document.getElementById("score").innerText = score;
-
-    // Phát giọng đọc đáp án
     playVoice(questions[current].aAudio, questions[current].aFallback);
 }
 
@@ -732,9 +714,11 @@ function closePopup() {
             setTimeout(() => {
                 document.getElementById("game").classList.remove("active");
                 document.getElementById("end").classList.add("active");
-                playEffect("win");
                 
-                // Đọc lời kết thúc
+                // Cuộn lên top ở màn hình kết thúc
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                playEffect("win");
                 playVoice("audio/ket-thuc.mp3", "Chúc mừng các bé! Các bé giỏi quá, cô khen lớp mình!");
             }, 500);
         }
@@ -742,6 +726,7 @@ function closePopup() {
 }
 
 function restart() {
+    window.scrollTo(0, 0);
     location.reload();
 }
 
