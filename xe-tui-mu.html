@@ -359,12 +359,12 @@
 </div>
 
 <!-- AUDIO EFFECTS -->
-<audio id="pop" src="audio/pop.mp3"></audio>
+<audio id="pop" src="https://dinhthingochan.github.io/chuyen-qua-trung/audio/pop.mp3"></audio>
 <audio id="success" src="https://actions.google.com/sounds/v1/alarms/ding.ogg"></audio>
-<audio id="win" src="audio/win.mp3"></audio>
+<audio id="win" src="https://dinhthingochan.github.io/chuyen-qua-trung/audio/win.mp3"></audio>
 
 <!-- NHẠC NỀN: Bài nhạc thiếu nhi vui nhộn -->
-<audio id="bgMusic" src="audio/nhac-nen.mp3" loop></audio>
+<audio id="bgMusic" src="https://dinhthingochan.github.io/chuyen-qua-trung/audio/nhac-nen.mp3" loop></audio>
 
 <script>
 /* BỘ CÂU HỎI & VĂN BẢN ĐỌC DỰ PHÒNG */
@@ -373,8 +373,8 @@ const questions = [
         q: "Các con vừa được nghe câu chuyện gì?", 
         a: "Câu chuyện: Quả Trứng 🥚", 
         icon: "📖",
-        qAudio: "audio/cau-1.mp3",
-        aAudio: "audio/dap-an-1.mp3",
+        qAudio: "https://dinhthingochan.github.io/chuyen-qua-trung/audio/cau-1.mp3",
+        aAudio: "https://dinhthingochan.github.io/chuyen-qua-trung/audio/dap-an-1.mp3",
         qFallback: "Các con vừa được nghe câu chuyện gì?",
         aFallback: "Đó là câu chuyện Quả Trứng."
     },
@@ -382,8 +382,8 @@ const questions = [
         q: "Trong câu chuyện gồm những con vật nào?", 
         a: "Gà trống 🐔, Lợn con 🐷, Chó đốm 🐶, Vịt con 🐥 và vịt mẹ 🦆", 
         icon: "🐔🐷🐶🐥🦆",
-        qAudio: "audio/cau-2.mp3",
-        aAudio: "audio/dap-an-2.mp3",
+        qAudio: "https://dinhthingochan.github.io/chuyen-qua-trung/audio/cau-2.mp3",
+        aAudio: "https://dinhthingochan.github.io/chuyen-qua-trung/audio/dap-an-2.mp3",
         qFallback: "Trong câu chuyện gồm những con vật nào?",
         aFallback: "Gồm có: Gà trống, Lợn con, Chó đốm và Vịt con."
     },
@@ -391,8 +391,8 @@ const questions = [
         q: "Khi thấy quả trứng các con vật đã kêu như thế nào?", 
         a: "Ò ó o - Ụt à ụt ịt - Gâu gâu 🎵", 
         icon: "🎵",
-        qAudio: "audio/cau-3.mp3",
-        aAudio: "audio/dap-an-3.mp3",
+        qAudio: "https://dinhthingochan.github.io/chuyen-qua-trung/audio/cau-3.mp3",
+        aAudio: "https://dinhthingochan.github.io/chuyen-qua-trung/audio/dap-an-3.mp3",
         qFallback: "Khi thấy quả trứng các con vật đã kêu như thế nào?",
         aFallback: "Gà kêu Ò ó o. Lợn kêu Út ít. Chó kêu Gâu gâu."
     },
@@ -400,8 +400,8 @@ const questions = [
         q: "Quả trứng đã nở ra con vật gì nhỉ?", 
         a: "Một chú Vịt con đáng yêu 🐥", 
         icon: "🐣",
-        qAudio: "audio/cau-4.mp3",
-        aAudio: "audio/dap-an-4.mp3",
+        qAudio: "https://dinhthingochan.github.io/chuyen-qua-trung/audio/cau-4.mp3",
+        aAudio: "https://dinhthingochan.github.io/chuyen-qua-trung/audio/dap-an-4.mp3",
         qFallback: "Quả trứng đã nở ra con gì nhỉ?",
         aFallback: "Đó là một chú Vịt con đáng yêu."
     }
@@ -499,7 +499,7 @@ function startGame() {
 
     // Thêm delay nhỏ rồi hỏi trẻ muốn chọn trứng nào
     setTimeout(() => {
-        playVoice("audio/chon-trung.mp3", "Các con muốn chọn quả trứng màu gì đầu tiên nào?");
+        playVoice("https://dinhthingochan.github.io/chuyen-qua-trung/audio/chon-trung.mp3", "Các con muốn chọn quả trứng màu gì đầu tiên nào?");
     }, 500);
 }
 
@@ -566,7 +566,7 @@ function closePopup() {
                 playEffect("win");
                 
                 // Đọc lời kết thúc
-                playVoice("audio/ket-thuc.mp3", "Chúc mừng các bé! Các bé giỏi quá, cô khen lớp mình!");
+                playVoice("https://dinhthingochan.github.io/chuyen-qua-trung/audio/ket-thuc.mp3", "Chúc mừng các bé! Các bé giỏi quá, cô khen lớp mình!");
             }, 500);
         }
     }, 400);
