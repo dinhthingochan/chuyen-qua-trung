@@ -20,6 +20,15 @@
         color: #2f3542;
     }
 
+    /* Ẩn thanh cuộn ngang nhưng vẫn cho phép cuộn */
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
     /* Các Nút Bấm Tùy Chỉnh */
     .btn-custom {
         padding: 12px 25px;
@@ -52,7 +61,7 @@
         box-shadow: 0 15px 35px rgba(255, 71, 87, 0.2);
     }
 
-    /* ĐỊNH DẠNG QUẢ TRỨNG (Được giữ nguyên) */
+    /* ĐỊNH DẠNG QUẢ TRỨNG */
     .egg-wrapper {
         width: 140px;
         height: 190px;
@@ -135,7 +144,6 @@
 </div>
 
 <!-- ================= MÀN HÌNH BẮT ĐẦU ================= -->
-<!-- Dùng Flex để căn giữa ngang và dọc tuyệt đối trên mọi màn hình -->
 <div id="start" class="flex flex-col justify-center items-center min-h-[100dvh] w-full p-4 relative z-10">
     <div class="glass-box border-[6px] md:border-8 border-[#ff4757] rounded-[30px] md:rounded-[40px] p-6 md:p-12 text-center max-w-3xl w-full animate-bounceIn relative">
         
@@ -153,9 +161,8 @@
 </div>
 
 <!-- ================= MÀN HÌNH TRÒ CHƠI ================= -->
-<!-- DÙNG BLOCK VÀ PADDING (Không dùng Flex) ĐỂ CHỐNG CẮT HÌNH TRÊN ĐIỆN THOẠI -->
-<div id="game" class="hidden min-h-[100dvh] w-full relative z-10 pt-6 pb-24 px-2 md:px-6">
-    <div class="max-w-5xl mx-auto">
+<div id="game" class="hidden min-h-[100dvh] w-full relative z-10 pt-6 pb-24 md:px-6">
+    <div class="max-w-5xl mx-auto px-2 md:px-0">
         
         <!-- Thanh điều khiển trên cùng -->
         <div class="flex flex-col-reverse md:flex-row justify-between items-center gap-4 mb-8 md:mb-16">
@@ -167,23 +174,41 @@
                 ⭐ Số trứng đã mở: <span id="score">0</span>/4
             </div>
         </div>
+    </div>
 
-        <!-- Lưới Quả Trứng - Responsive tự động chia cột bằng Tailwind -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-10 justify-items-center w-full">
+    <!-- Hướng dẫn vuốt trên điện thoại -->
+    <div class="w-full text-center">
+        <p class="md:hidden text-[#ff4757] font-bold text-lg mb-4 animate-pulse">👈 Vuốt ngang để chọn trứng 👉</p>
+    </div>
+
+    <!-- DANH SÁCH QUẢ TRỨNG (CUỘN NGANG TRÊN MOBILE) -->
+    <div class="flex overflow-x-auto hide-scrollbar gap-6 md:gap-10 pb-8 px-8 md:px-0 w-full justify-start md:justify-center snap-x snap-mandatory items-center max-w-5xl mx-auto" style="-webkit-overflow-scrolling: touch;">
+        <!-- Quả 1 -->
+        <div class="shrink-0 snap-center">
             <div class="egg-wrapper" onclick="openEgg(this, 0)">
                 <div class="egg e1"><div class="egg-label">Số 1</div></div>
             </div>
+        </div>
+        <!-- Quả 2 -->
+        <div class="shrink-0 snap-center">
             <div class="egg-wrapper" onclick="openEgg(this, 1)">
                 <div class="egg e2"><div class="egg-label">Số 2</div></div>
             </div>
+        </div>
+        <!-- Quả 3 -->
+        <div class="shrink-0 snap-center">
             <div class="egg-wrapper" onclick="openEgg(this, 2)">
                 <div class="egg e3"><div class="egg-label">Số 3</div></div>
             </div>
+        </div>
+        <!-- Quả 4 -->
+        <div class="shrink-0 snap-center">
             <div class="egg-wrapper" onclick="openEgg(this, 3)">
                 <div class="egg e4"><div class="egg-label">Số 4</div></div>
             </div>
         </div>
-
+        <!-- Khoảng trống ảo cuối cùng cho Mobile mượt mà -->
+        <div class="shrink-0 w-4 md:hidden"></div>
     </div>
 </div>
 
@@ -339,7 +364,7 @@ function changeDecorations(state) {
 function startGame() {
     // Chuyển màn hình sử dụng class của Tailwind
     document.getElementById("start").classList.replace("flex", "hidden");
-    document.getElementById("game").classList.replace("hidden", "block"); // DÙNG BLOCK CHỐNG CẮT
+    document.getElementById("game").classList.replace("hidden", "block");
     
     changeDecorations('game');
     
