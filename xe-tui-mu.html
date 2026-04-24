@@ -72,6 +72,11 @@
     @media (min-width: 768px) {
         .egg-wrapper { width: 180px; height: 230px; }
     }
+    /* Chỉnh nhỏ trứng lại chút khi xoay ngang điện thoại để đỡ bị chiếm chỗ */
+    @media (max-height: 500px) and (orientation: landscape) {
+        .egg-wrapper { width: 110px; height: 150px; }
+        .egg-label { font-size: 16px; padding: 3px 12px; }
+    }
 
     .egg {
         width: 100%;
@@ -128,12 +133,32 @@
         40% { transform: scale(1.2) rotate(15deg); filter: brightness(1.2); }
         100% { transform: scale(0) rotate(-30deg) translateY(100px); opacity: 0; }
     }
+    @keyframes rotatePhone {
+        0% { transform: rotate(0deg); }
+        50% { transform: rotate(-90deg); }
+        100% { transform: rotate(-90deg); }
+    }
 
     .animate-bounceIn { animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .animate-rotatePhone { animation: rotatePhone 2s ease-in-out infinite alternate; }
+
+    /* CSS ĐỂ ÉP XOAY NGANG MÀN HÌNH */
+    #portrait-lock { display: none; }
+    @media screen and (max-width: 896px) and (orientation: portrait) {
+        #portrait-lock { display: flex !important; }
+        body { overflow: hidden; }
+    }
 </style>
 </head>
 
 <body class="min-h-[100dvh] w-full overflow-x-hidden relative">
+
+<!-- ================= MÀN HÌNH ÉP XOAY NGANG (CHỈ HIỆN TRÊN ĐIỆN THOẠI DỌC) ================= -->
+<div id="portrait-lock" class="fixed inset-0 z-[99999] bg-[#fffdf2] flex-col justify-center items-center text-center p-6">
+    <div class="text-7xl md:text-9xl mb-8 animate-rotatePhone">📱</div>
+    <h2 class="text-[#ff4757] text-3xl md:text-4xl font-black uppercase mb-4" style="text-shadow: 2px 2px 0 #fbd571;">Vui lòng xoay ngang<br>điện thoại</h2>
+    <p class="text-[#2f3542] text-xl font-bold max-w-md">Trò chơi sẽ đẹp nhất và hiển thị đầy đủ các quả trứng khi bạn cầm điện thoại nằm ngang nhé!</p>
+</div>
 
 <!-- TRANG TRÍ CỐ ĐỊNH XUYÊN SUỐT TRÒ CHƠI -->
 <div class="fixed inset-0 pointer-events-none opacity-70 z-0">
@@ -161,59 +186,47 @@
 </div>
 
 <!-- ================= MÀN HÌNH TRÒ CHƠI ================= -->
-<div id="game" class="hidden min-h-[100dvh] w-full relative z-10 pt-6 pb-24 md:px-6">
-    <div class="max-w-5xl mx-auto px-4 md:px-0">
+<div id="game" class="hidden min-h-[100dvh] w-full relative z-10 pt-4 md:pt-6 pb-20 md:pb-24 px-2 md:px-6">
+    <div class="max-w-5xl mx-auto">
         
         <!-- Thanh điều khiển trên cùng -->
-        <div class="flex flex-col-reverse md:flex-row justify-between items-center gap-4 mb-8 md:mb-16">
-            <div class="flex gap-3 justify-center w-full md:w-auto">
-                <button onclick="toggleFullscreen()" class="btn-custom btn-blue !text-sm md:!text-lg !px-4 !py-2">⛶ Toàn màn hình</button>
-                <button id="musicBtn" onclick="toggleMusic()" class="btn-custom btn-purple !text-sm md:!text-lg !px-4 !py-2">🔊 Tắt nhạc</button>
+        <div class="flex justify-between items-center gap-2 mb-6 md:mb-16">
+            <div class="flex gap-2">
+                <button onclick="toggleFullscreen()" class="btn-custom btn-blue !text-sm md:!text-lg !px-3 md:!px-4 !py-2">⛶ Toàn màn hình</button>
+                <button id="musicBtn" onclick="toggleMusic()" class="btn-custom btn-purple !text-sm md:!text-lg !px-3 md:!px-4 !py-2">🔊 Tắt nhạc</button>
             </div>
-            <div class="bg-white text-[#ff4757] border-[3px] md:border-4 border-[#ffa502] rounded-[20px] px-4 md:px-6 py-2 text-base md:text-2xl font-bold shadow-md text-center w-full md:w-auto">
+            <div class="bg-white text-[#ff4757] border-[3px] md:border-4 border-[#ffa502] rounded-[20px] px-3 md:px-6 py-2 text-sm md:text-2xl font-bold shadow-md text-center">
                 ⭐ Số trứng đã mở: <span id="score">0</span>/4
             </div>
         </div>
     </div>
 
-    <!-- Hướng dẫn vuốt trên điện thoại -->
-    <div class="w-full text-center">
-        <p class="md:hidden text-[#ff4757] font-bold text-lg mb-4 animate-pulse">👈 Vuốt ngang để chọn trứng 👉</p>
-    </div>
-
-    <!-- DANH SÁCH QUẢ TRỨNG (ĐÃ FIX LỖI MẤT QUẢ SỐ 1) -->
-    <div class="flex overflow-x-auto hide-scrollbar gap-6 md:gap-10 pb-8 w-full justify-start lg:justify-center snap-x snap-mandatory items-center max-w-6xl mx-auto" style="-webkit-overflow-scrolling: touch;">
-        
-        <!-- Khoảng trống ảo ĐẦU giúp tạo lề bảo vệ trứng số 1 trên Mobile/Tablet -->
-        <div class="shrink-0 w-2 md:w-8 lg:hidden"></div>
-
+    <!-- DANH SÁCH QUẢ TRỨNG (KHI XOAY NGANG SẼ VỪA VẶN 1 DÒNG) -->
+    <div class="flex justify-center gap-4 md:gap-10 pb-8 w-full items-center max-w-6xl mx-auto">
         <!-- Quả 1 -->
-        <div class="shrink-0 snap-center">
+        <div class="shrink-0">
             <div class="egg-wrapper" onclick="openEgg(this, 0)">
                 <div class="egg e1"><div class="egg-label">Số 1</div></div>
             </div>
         </div>
         <!-- Quả 2 -->
-        <div class="shrink-0 snap-center">
+        <div class="shrink-0">
             <div class="egg-wrapper" onclick="openEgg(this, 1)">
                 <div class="egg e2"><div class="egg-label">Số 2</div></div>
             </div>
         </div>
         <!-- Quả 3 -->
-        <div class="shrink-0 snap-center">
+        <div class="shrink-0">
             <div class="egg-wrapper" onclick="openEgg(this, 2)">
                 <div class="egg e3"><div class="egg-label">Số 3</div></div>
             </div>
         </div>
         <!-- Quả 4 -->
-        <div class="shrink-0 snap-center">
+        <div class="shrink-0">
             <div class="egg-wrapper" onclick="openEgg(this, 3)">
                 <div class="egg e4"><div class="egg-label">Số 4</div></div>
             </div>
         </div>
-
-        <!-- Khoảng trống ảo CUỐI giúp mượt mà khi cuộn tới cuối -->
-        <div class="shrink-0 w-2 md:w-8 lg:hidden"></div>
     </div>
 </div>
 
@@ -221,12 +234,12 @@
 <div id="popup" class="fixed inset-0 bg-black/80 z-[9999] hidden justify-center items-center p-4 backdrop-blur-sm">
     <!-- Hộp nội dung Popup -->
     <div id="popupBox" class="bg-white p-6 md:p-10 rounded-[30px] w-full max-w-2xl text-center shadow-2xl border-[6px] md:border-8 border-[#ffa502] transform scale-50 opacity-0 transition-all duration-500 ease-out max-h-[90vh] overflow-y-auto">
-        <div id="popupIcon" class="text-6xl md:text-7xl mb-2">❓</div>
-        <h2 id="question" class="text-[#ff4757] text-2xl md:text-4xl font-bold mb-6 leading-tight"></h2>
+        <div id="popupIcon" class="text-5xl md:text-7xl mb-2">❓</div>
+        <h2 id="question" class="text-[#ff4757] text-xl md:text-4xl font-bold mb-4 md:mb-6 leading-tight"></h2>
         
         <button id="btnAnswer" onclick="showAnswer()" class="btn-custom btn-yellow w-full md:w-auto">Xem đáp án</button>
         
-        <h3 id="answer" class="text-[#1e90ff] text-xl md:text-3xl font-bold my-6 opacity-0 translate-y-5 transition-all duration-500"></h3>
+        <h3 id="answer" class="text-[#1e90ff] text-lg md:text-3xl font-bold my-4 md:my-6 opacity-0 translate-y-5 transition-all duration-500"></h3>
         
         <button id="btnClose" onclick="closePopup()" class="btn-custom btn-green hidden w-full md:w-auto mx-auto">Tiếp tục ➔</button>
     </div>
@@ -367,6 +380,13 @@ function changeDecorations(state) {
 }
 
 function startGame() {
+    // Cố gắng khóa màn hình ngang trên Android
+    try {
+        if (screen.orientation && screen.orientation.lock) {
+            screen.orientation.lock('landscape').catch(e => console.log(e));
+        }
+    } catch (error) {}
+
     // Chuyển màn hình sử dụng class của Tailwind
     document.getElementById("start").classList.replace("flex", "hidden");
     document.getElementById("game").classList.replace("hidden", "block");
@@ -478,7 +498,12 @@ function restart() {
 
 function toggleFullscreen() {
     if(!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => console.log(err));
+        document.documentElement.requestFullscreen().then(() => {
+            // Khóa màn hình ngang khi vào chế độ toàn màn hình
+            if (screen.orientation && screen.orientation.lock) {
+                screen.orientation.lock('landscape').catch(err => console.log(err));
+            }
+        }).catch(err => console.log(err));
     } else {
         document.exitFullscreen();
     }
