@@ -2,10 +2,14 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>🎒 Xé Túi Mù - Câu Chuyện Quả Trứng</title>
 
 <style>
+    * {
+        box-sizing: border-box;
+    }
+
     :root {
         --primary: #ff4757;
         --secondary: #1e90ff;
@@ -21,6 +25,7 @@
         color: var(--text-dark);
         overflow: hidden;
         height: 100vh;
+        width: 100vw;
     }
 
     .screen {
@@ -31,6 +36,9 @@
         align-items: center;
         flex-direction: column;
         position: relative;
+        overflow-y: auto; /* Cho phép cuộn nếu màn hình quá thấp */
+        overflow-x: hidden;
+        padding: 20px 0;
     }
     .active { display: flex; }
 
@@ -44,6 +52,8 @@
         border: 8px solid #ff4757;
         animation: bounceIn 1s ease;
         position: relative;
+        max-width: 90%;
+        width: 800px;
     }
 
     .btn-welcome {
@@ -62,12 +72,20 @@
     }
     .btn-welcome:hover { transform: scale(1.1); }
 
+    .school-name {
+        color: #1e90ff; 
+        font-size: 26px; 
+        margin-bottom: 5px; 
+        text-transform: uppercase;
+    }
+
     h1.title {
         color: #ff4757;
         font-size: 65px;
         margin: 0 0 10px 0;
         text-transform: uppercase;
         text-shadow: 3px 3px 0 #fff, 5px 5px 0 #ffaa00;
+        line-height: 1.2;
     }
 
     h2.subtitle {
@@ -76,6 +94,13 @@
         margin-top: 0;
         margin-bottom: 25px;
         text-transform: uppercase;
+    }
+
+    .teacher-name {
+        color: #2f3542; 
+        font-size: 24px; 
+        margin-top: -10px; 
+        margin-bottom: 30px;
     }
 
     button {
@@ -91,6 +116,7 @@
         box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         transition: all 0.2s;
         font-family: inherit;
+        white-space: nowrap;
     }
     button:hover { 
         transform: scale(1.05) translateY(-5px); 
@@ -106,6 +132,7 @@
         position: absolute;
         top: 20px;
         width: 90%;
+        max-width: 1000px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -115,6 +142,7 @@
     .top-buttons {
         display: flex;
         gap: 15px;
+        flex-wrap: wrap;
     }
 
     .score {
@@ -126,14 +154,18 @@
         border-radius: 20px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         border: 4px solid #ffa502;
+        white-space: nowrap;
     }
 
     .grid {
         display: grid;
-        grid-template-columns: repeat(4, 180px); /* 4 quả trứng xếp hàng ngang */
+        grid-template-columns: repeat(4, 180px);
         gap: 30px;
-        margin-top: 60px;
+        margin-top: 80px;
         z-index: 2;
+        justify-content: center;
+        width: 100%;
+        padding: 0 20px;
     }
 
     /* THIẾT KẾ QUẢ TRỨNG */
@@ -146,6 +178,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        margin: auto;
     }
 
     .egg {
@@ -216,24 +249,32 @@
         align-items: center;
         z-index: 100;
         backdrop-filter: blur(5px);
+        padding: 20px;
     }
 
     .box {
         background: #fff;
         padding: 40px;
         border-radius: 30px;
-        width: 700px;
-        max-width: 90%;
+        width: 100%;
+        max-width: 700px;
         text-align: center;
         box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         border: 8px solid #ffa502;
         transform: scale(0.5);
         opacity: 0;
         transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        max-height: 90vh;
+        overflow-y: auto;
     }
     .popup.show .box {
         transform: scale(1);
         opacity: 1;
+    }
+
+    #popupIcon {
+        font-size: 80px; 
+        margin-bottom: 10px;
     }
 
     .question-text {
@@ -269,6 +310,125 @@
         border: 8px solid #fff;
         box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         animation: bounceIn 1s ease;
+        max-width: 90%;
+    }
+    .end-title-1 { color:#ff4757; font-size: 55px; margin-bottom: 20px; line-height: 1.2;}
+    .end-title-2 { color:#ff4757; font-size: 55px; margin-top: 0; line-height: 1.2;}
+    .end-claps { font-size: 60px; margin: 30px 0; }
+
+    /* DECORATIONS */
+    .decor { position: absolute; z-index: 1; pointer-events: none; }
+    .d1 { font-size: 50px; top: 10%; left: 10%; animation: float 4s infinite alternate; }
+    .d2 { font-size: 50px; top: 20%; right: 15%; animation: float 3s infinite alternate-reverse; }
+    .d3 { font-size: 50px; bottom: 15%; left: 20%; animation: float 5s infinite alternate; }
+    .d4 { font-size: 50px; bottom: 10%; right: 10%; animation: float 4s infinite alternate-reverse; }
+    
+    .c1 { top:15%; left:10%; font-size:80px; opacity:0.8; animation: float 4s infinite alternate; }
+    .c2 { top:10%; right:15%; font-size:100px; opacity:0.8; animation: float 5s infinite alternate-reverse; }
+    .g1 { bottom:5%; left:5%; font-size:100px; }
+    .g2 { bottom:5%; right:5%; font-size:100px; }
+
+    .b1 { font-size: 80px; top: 10%; left: 10%; animation: float 4s infinite alternate; }
+    .b2 { font-size: 80px; top: 15%; right: 15%; animation: float 3s infinite alternate-reverse; }
+
+    /* ------------------------------------------
+       RESPONSIVE MEDIA QUERIES
+       ------------------------------------------ */
+
+    /* Máy tính bảng & Màn hình nhỏ (Tablet) */
+    @media (max-width: 900px) {
+        .grid {
+            grid-template-columns: repeat(2, 180px);
+            gap: 25px;
+            margin-top: 130px; /* Nhường chỗ cho thanh top-bar */
+        }
+        .top-bar {
+            flex-direction: column;
+            gap: 15px;
+        }
+        .top-buttons { justify-content: center; }
+        
+        h1.title { font-size: 50px; }
+        h2.subtitle { font-size: 28px; }
+        .question-text { font-size: 32px; }
+        .answer-text { font-size: 28px; }
+        .end-title-1, .end-title-2 { font-size: 45px; }
+    }
+
+    /* Điện thoại di động (Mobile) */
+    @media (max-width: 600px) {
+        .start-content {
+            padding: 30px 20px 20px 20px;
+            border-width: 5px;
+        }
+        .btn-welcome {
+            font-size: 13px;
+            padding: 8px 12px;
+            top: -15px;
+            right: 10px; /* Chỉnh lại để không bị lẹm ra ngoài */
+            border-width: 2px;
+        }
+
+        .school-name { font-size: 18px; }
+        h1.title { font-size: 40px; text-shadow: 2px 2px 0 #fff, 3px 3px 0 #ffaa00; }
+        h2.subtitle { font-size: 20px; margin-bottom: 15px; }
+        .teacher-name { font-size: 16px; margin-bottom: 20px; }
+
+        button { font-size: 18px; padding: 12px 25px; border-width: 3px; }
+
+        .top-bar { top: 10px; }
+        .top-buttons button { font-size: 14px; padding: 8px 15px; }
+        .score { font-size: 16px; padding: 8px 15px; border-width: 3px;}
+
+        .grid {
+            grid-template-columns: repeat(2, 130px);
+            gap: 15px;
+            margin-top: 110px;
+        }
+        .egg-container { width: 130px; height: 170px; }
+        .egg { width: 110px; height: 150px; }
+        .egg-label { font-size: 16px; padding: 3px 10px; }
+
+        .box { padding: 25px 15px; border-width: 5px; }
+        #popupIcon { font-size: 60px; margin-bottom: 5px; }
+        .question-text { font-size: 22px; margin: 10px 0 20px 0; }
+        .answer-text { font-size: 20px; margin: 15px 0; }
+
+        .end-content { padding: 30px 20px; border-width: 5px; }
+        .end-title-1, .end-title-2 { font-size: 32px; margin-bottom: 10px; }
+        .end-claps { font-size: 45px; margin: 20px 0; }
+
+        /* Thu nhỏ các icon trang trí trên mobile */
+        .decor { font-size: 35px !important; }
+        .c1, .c2, .g1, .g2 { font-size: 50px !important; }
+    }
+
+    /* Điện thoại màn hình quá nhỏ (iPhone SE, Galaxy Fold lúc gập) */
+    @media (max-width: 360px) {
+        .grid {
+            grid-template-columns: repeat(2, 110px);
+            gap: 10px;
+        }
+        .egg-container { width: 110px; height: 140px; }
+        .egg { width: 90px; height: 120px; }
+        h1.title { font-size: 32px; }
+        .school-name { font-size: 16px; }
+    }
+
+    /* Tùy chỉnh khi xoay ngang điện thoại (Landscape) */
+    @media (max-height: 500px) and (orientation: landscape) {
+        .grid {
+            margin-top: 60px;
+            grid-template-columns: repeat(4, 110px);
+            gap: 10px;
+        }
+        .egg-container { width: 110px; height: 140px; }
+        .egg { width: 90px; height: 120px; }
+        .top-bar { top: 5px; flex-direction: row; }
+        h1.title { font-size: 35px; margin: 0; }
+        h2.subtitle { font-size: 18px; margin-bottom: 10px; }
+        .start-content { padding: 15px 30px; }
+        .teacher-name { margin-bottom: 10px; }
     }
 
 </style>
@@ -279,17 +439,17 @@
 <!-- START SCREEN -->
 <div id="start" class="screen active">
     <!-- Hiệu ứng hoa giấy trang trí nền -->
-    <div style="position:absolute; font-size: 50px; top: 10%; left: 10%; animation: float 4s infinite alternate;">🎉</div>
-    <div style="position:absolute; font-size: 50px; top: 20%; right: 15%; animation: float 3s infinite alternate-reverse;">🎊</div>
-    <div style="position:absolute; font-size: 50px; bottom: 15%; left: 20%; animation: float 5s infinite alternate;">✨</div>
-    <div style="position:absolute; font-size: 50px; bottom: 10%; right: 10%; animation: float 4s infinite alternate-reverse;">🎁</div>
+    <div class="decor d1">🎉</div>
+    <div class="decor d2">🎊</div>
+    <div class="decor d3">✨</div>
+    <div class="decor d4">🎁</div>
 
     <div class="start-content">
         <button class="btn-welcome" onclick="playWelcome()">🔊 Phát lời chào</button>
-        <h3 style="color: #1e90ff; font-size: 26px; margin-bottom: 5px; text-transform: uppercase;">Trường mầm non Mộ Đức</h3>
+        <h3 class="school-name">Trường mầm non Mộ Đức</h3>
         <h1 class="title">XÉ TÚI MÙ</h1>
         <h2 class="subtitle">CÂU CHUYỆN QUẢ TRỨNG</h2>
-        <h4 style="color: #2f3542; font-size: 24px; margin-top: -10px; margin-bottom: 30px;">Giáo viên: Đinh Thị Ngọc Hân & Trần Thị Minh Hiếu</h4>
+        <h4 class="teacher-name">Giáo viên: Đinh Thị Ngọc Hân & Trần Thị Minh Hiếu</h4>
         <button onclick="startGame()">▶ BẮT ĐẦU CHƠI</button>
     </div>
 </div>
@@ -298,17 +458,17 @@
 <div id="game" class="screen">
     <div class="top-bar">
         <div class="top-buttons">
-            <button class="btn-blue" style="padding: 10px 20px; font-size: 18px;" onclick="toggleFullscreen()">⛶ Toàn màn hình</button>
-            <button id="musicBtn" class="btn-purple" style="padding: 10px 20px; font-size: 18px;" onclick="toggleMusic()">🔊 Tắt nhạc</button>
+            <button class="btn-blue" onclick="toggleFullscreen()">⛶ Toàn màn hình</button>
+            <button id="musicBtn" class="btn-purple" onclick="toggleMusic()">🔊 Tắt nhạc</button>
         </div>
         <div class="score">⭐ Số trứng đã mở: <span id="score">0</span>/4</div>
     </div>
 
     <!-- Mây và trang trí -->
-    <div style="position:absolute; top:15%; left:10%; font-size:80px; opacity:0.8; z-index:1; animation: float 4s infinite alternate;">☁️</div>
-    <div style="position:absolute; top:10%; right:15%; font-size:100px; opacity:0.8; z-index:1; animation: float 5s infinite alternate-reverse;">☁️</div>
-    <div style="position:absolute; bottom:5%; left:5%; font-size:100px; z-index:1;">🎁</div>
-    <div style="position:absolute; bottom:5%; right:5%; font-size:100px; z-index:1;">🛍️</div>
+    <div class="decor c1">☁️</div>
+    <div class="decor c2">☁️</div>
+    <div class="decor g1">🎁</div>
+    <div class="decor g2">🛍️</div>
 
     <div class="grid">
         <div class="egg-container" onclick="openEgg(this, 0)">
@@ -337,7 +497,7 @@
 <!-- POPUP SCREEN -->
 <div class="popup" id="popup">
     <div class="box">
-        <div style="font-size: 80px; margin-bottom: 10px;" id="popupIcon">❓</div>
+        <div id="popupIcon">❓</div>
         <h2 id="question" class="question-text"></h2>
         <button id="btnAnswer" class="btn-yellow" onclick="showAnswer()">Xem đáp án</button>
         <h3 id="answer" class="answer-text"></h3>
@@ -347,13 +507,13 @@
 
 <!-- END SCREEN -->
 <div id="end" class="screen">
-    <div style="position:absolute; font-size: 80px; top: 10%; left: 10%; animation: float 4s infinite alternate;">🎈</div>
-    <div style="position:absolute; font-size: 80px; top: 15%; right: 15%; animation: float 3s infinite alternate-reverse;">🎈</div>
+    <div class="decor b1">🎈</div>
+    <div class="decor b2">🎈</div>
     
     <div class="end-content">
-        <h1 style="color:#ff4757; font-size: 55px; margin-bottom: 20px;">CÁC CON GIỎI QUÁ.</h1>
-        <h1 style="color:#ff4757; font-size: 55px; margin-top: 0;">CÔ KHEN LỚP MÌNH</h1>
-        <div style="font-size: 60px; margin: 30px 0;">👏👏👏</div>
+        <h1 class="end-title-1">CÁC CON GIỎI QUÁ.</h1>
+        <h1 class="end-title-2">CÔ KHEN LỚP MÌNH</h1>
+        <div class="end-claps">👏👏👏</div>
         <button onclick="restart()">🔄 Chơi lại từ đầu</button>
     </div>
 </div>
