@@ -32,7 +32,6 @@
         display: none;
         height: 100%;
         width: 100%;
-        justify-content: center;
         align-items: center;
         flex-direction: column;
         position: relative;
@@ -44,6 +43,7 @@
 
     /* START SCREEN */
     .start-content {
+        margin: auto; /* Canh giữa an toàn */
         z-index: 2;
         background: rgba(255, 255, 255, 0.95);
         padding: 30px 60px;
@@ -129,14 +129,16 @@
 
     /* GAME SCREEN */
     .top-bar {
-        position: absolute;
-        top: 20px;
+        position: relative; /* Thay vì absolute để ko bị đè */
+        margin-top: 10px;
+        margin-bottom: 20px;
         width: 90%;
         max-width: 1000px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         z-index: 5;
+        flex-shrink: 0;
     }
 
     .top-buttons {
@@ -161,11 +163,11 @@
         display: grid;
         grid-template-columns: repeat(4, 180px);
         gap: 30px;
-        margin-top: 80px;
+        margin: auto; /* Đẩy ra giữa dọc nếu màn hình đủ dài */
+        padding: 20px 20px 50px 20px; /* Thêm khoảng trống dưới cùng để scroll không bị sát mép */
         z-index: 2;
         justify-content: center;
         width: 100%;
-        padding: 0 20px;
     }
 
     /* THIẾT KẾ QUẢ TRỨNG */
@@ -303,6 +305,7 @@
         background: radial-gradient(circle, #7bed9f 0%, #2ed573 100%);
     }
     .end-content {
+        margin: auto; /* Canh giữa an toàn */
         z-index: 2;
         background: rgba(255, 255, 255, 0.95);
         padding: 50px;
@@ -340,7 +343,6 @@
         .grid {
             grid-template-columns: repeat(2, 180px);
             gap: 25px;
-            margin-top: 130px; /* Nhường chỗ cho thanh top-bar */
         }
         .top-bar {
             flex-direction: column;
@@ -365,7 +367,7 @@
             font-size: 13px;
             padding: 8px 12px;
             top: -15px;
-            right: 10px; /* Chỉnh lại để không bị lẹm ra ngoài */
+            right: 10px;
             border-width: 2px;
         }
 
@@ -376,14 +378,12 @@
 
         button { font-size: 18px; padding: 12px 25px; border-width: 3px; }
 
-        .top-bar { top: 10px; }
         .top-buttons button { font-size: 14px; padding: 8px 15px; }
         .score { font-size: 16px; padding: 8px 15px; border-width: 3px;}
 
         .grid {
             grid-template-columns: repeat(2, 130px);
             gap: 15px;
-            margin-top: 110px;
         }
         .egg-container { width: 130px; height: 170px; }
         .egg { width: 110px; height: 150px; }
@@ -398,7 +398,6 @@
         .end-title-1, .end-title-2 { font-size: 32px; margin-bottom: 10px; }
         .end-claps { font-size: 45px; margin: 20px 0; }
 
-        /* Thu nhỏ các icon trang trí trên mobile */
         .decor { font-size: 35px !important; }
         .c1, .c2, .g1, .g2 { font-size: 50px !important; }
     }
@@ -418,13 +417,12 @@
     /* Tùy chỉnh khi xoay ngang điện thoại (Landscape) */
     @media (max-height: 500px) and (orientation: landscape) {
         .grid {
-            margin-top: 60px;
             grid-template-columns: repeat(4, 110px);
             gap: 10px;
         }
         .egg-container { width: 110px; height: 140px; }
         .egg { width: 90px; height: 120px; }
-        .top-bar { top: 5px; flex-direction: row; }
+        .top-bar { flex-direction: row; }
         h1.title { font-size: 35px; margin: 0; }
         h2.subtitle { font-size: 18px; margin-bottom: 10px; }
         .start-content { padding: 15px 30px; }
